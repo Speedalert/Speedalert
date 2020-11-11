@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Speedalert</string>
+    <string name="welcomemsg">Hello there, Welcome!</string>
+    <string name="signinprompt">Sign in to continue</string>
+    <string name="usernamehint">Username</string>
+    <string name="passwordhint">Password</string>
 </resources>
