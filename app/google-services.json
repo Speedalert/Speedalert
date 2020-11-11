@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "784059688481",
+    "firebase_url": "https://speedalert-4d95b.firebaseio.com",
+    "project_id": "speedalert-4d95b",
+    "storage_bucket": "speedalert-4d95b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784059688481:android:09e62f4ad634a25acca560",
+        "android_client_info": {
+          "package_name": "pwc.appdev.speedalert"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "784059688481-68qcic9vbngahi1k5otk3p9g3gm1nss9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmN-d1l_oQlY0gLen9zf4ODu-OJk2MFfM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "784059688481-68qcic9vbngahi1k5otk3p9g3gm1nss9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
