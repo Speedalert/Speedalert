@@ -24,7 +24,7 @@
             android:layout_height="150dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
-            android:src="@drawable/speedlogo" />
+            android:src="@drawable/speedalert" />
 
         <TextView
             android:id="@+id/welcome"
@@ -32,6 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:fontFamily="@font/bungee"
+            android:textColor="@color/black"
             android:text="@string/welcomemsg"
             android:textSize="35sp" />
 
@@ -64,7 +65,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -82,16 +83,52 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    />
-
+                    android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <androidx.appcompat.widget.AppCompatButton
 
+                android:id="@+id/forgotpassword"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginEnd="10dp"
+                android:background="@color/transparent"
+                android:elevation="0dp"
+                android:fontFamily="@font/antic"
+                android:text="@string/forgot"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="italic" />
 
+            <androidx.appcompat.widget.AppCompatButton
 
+                android:id="@+id/loginbutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="20dp"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/antic"
+                android:text="@string/login"
+                android:textStyle="bold" />
 
+            <androidx.appcompat.widget.AppCompatButton
 
+                android:id="@+id/registernewuser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@color/transparent"
+                android:elevation="0dp"
+                android:fontFamily="@font/antic"
+                android:text="@string/register"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
