@@ -34,6 +34,7 @@ public class Signup extends AppCompatActivity {
         dob = findViewById(R.id.dateofbirth);
         register = findViewById(R.id.signupbutton);
 
+
         MaterialDatePicker.Builder materialDateBuilder = MaterialDatePicker.Builder.datePicker();
         materialDateBuilder.setTitleText("SELECT A DATE");
         final MaterialDatePicker materialDatePicker = materialDateBuilder.build();
