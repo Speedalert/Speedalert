@@ -10,11 +10,26 @@
     <ImageView
         android:id="@+id/welcomeimg"
         android:layout_width="wrap_content"
+        android:transitionName="logo_image"
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
         android:src="@drawable/speedalert"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/welcomemsg"
+        android:transitionName="logo_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:text="@string/appdesc"
+        android:textSize="25sp"
+        android:fontFamily="@font/antic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeimg" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

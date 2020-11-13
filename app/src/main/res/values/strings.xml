@@ -7,4 +7,14 @@
     <string name="forgot">"Forgot Password?</string>
     <string name="login">Login</string>
     <string name="register">New User? Sign Up now!</string>
+    <string name="appdesc">Speed Monitoring App</string>
+    <string name="welcomereg">Welcome</string>
+    <string name="signupprompt">Sign Up to start a new journey!</string>
+    <string name="completenamehint">Complete Name</string>
+    <string name="registernew">Register Now</string>
+    <string name="cancelreg">Back to Main Menu</string>
+    <string name="dobhint">Date of Birth</string>
+    <string name="contacthint">Contact Number</string>
+    <string name="platenumber">Vehicle\'s Plate Number</string>
+    <string name="email">Email Address</string>
 </resources>
