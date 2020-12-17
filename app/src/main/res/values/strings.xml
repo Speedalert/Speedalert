@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">Speedalert</string>
     <string name="welcomemsg">Hello there, Welcome back!</string>
     <string name="signinprompt">Sign in to continue</string>
@@ -17,4 +18,22 @@
     <string name="contacthint">Contact Number</string>
     <string name="platenumber">Vehicle\'s Plate Number</string>
     <string name="email">Email Address</string>
+    <string name="home">Home</string>
+    <string name="logout">Logout</string>
+    <string name="profile">My Profile</string>
+    <string name="resetpass">We want to have you back</string>
+    <string name="resetpromptmsg">Please enter the email you used upon registration.</string>
+    <string name="resetpassnow">Reset my Password</string>
+    <string name="confirmreg">Please review your inputted data</string>
+    <string name="confirmpassword">Please enter password to confirm</string>
+    <string name="confirmpasswordhint">Confim Password</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="tv_speed">Speed (kph):</string>
+    <string name="tv_avg_speed">Avg Speed (kph):</string>
+    <string name="tv_distance">Distance (k):</string>
+    <string name="tv_max_speed">Total Time (min):</string>
+    <string name="editprofile">Edit Profile</string>
+    <string name="saveprofile">Save Changes</string>
+
 </resources>

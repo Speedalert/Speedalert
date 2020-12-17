@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
 
+    android:id="@+id/constraintsignup"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -19,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/welcome"
+            android:id="@+id/welcome3"
             android:layout_width="wrap_content"
             android:transitionName="logo_text"
             android:layout_height="wrap_content"
@@ -31,7 +32,7 @@
             android:textSize="30sp" />
 
         <TextView
-            android:id="@+id/loginprompt"
+            android:id="@+id/singupprompt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -49,6 +50,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
 
+                android:id="@+id/layoutcompletename"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -58,6 +60,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/completename"
+                    android:fontFamily="@font/antic"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -65,6 +68,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
 
+                android:id="@+id/layoutdateofbirth"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -75,6 +79,7 @@
                 <com.google.android.material.textfield.TextInputEditText
 
                     android:id="@+id/dateofbirth"
+                    android:fontFamily="@font/antic"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -82,6 +87,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
 
+                android:id="@+id/layoutcontactnumber"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -92,6 +98,7 @@
                 <com.google.android.material.textfield.TextInputEditText
 
                     android:id="@+id/contactnumber"
+                    android:fontFamily="@font/antic"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"/>
@@ -100,6 +107,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
 
+                android:id="@+id/layoutemailadd"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -110,6 +118,7 @@
                 <com.google.android.material.textfield.TextInputEditText
 
                     android:id="@+id/emailadd"
+                    android:fontFamily="@font/antic"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"/>
@@ -118,6 +127,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
 
+                android:id="@+id/layoutplatenumber"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -128,6 +138,7 @@
                 <com.google.android.material.textfield.TextInputEditText
 
                     android:id="@+id/platenumber"
+                    android:fontFamily="@font/antic"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -135,6 +146,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
 
+                android:id="@+id/layoutusername"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -145,6 +157,7 @@
                 <com.google.android.material.textfield.TextInputEditText
 
                     android:id="@+id/regusername"
+                    android:fontFamily="@font/antic"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -152,6 +165,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
 
+                android:id="@+id/layoutpassword"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -163,27 +177,49 @@
                 <com.google.android.material.textfield.TextInputEditText
 
                     android:id="@+id/regpassword"
+                    android:fontFamily="@font/antic"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"/>
 
              </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+
+                android:id="@+id/layoutcpassword"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="@string/confirmpasswordhint"
+                app:passwordToggleEnabled="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+
+                    android:id="@+id/regcpassword"
+                    android:fontFamily="@font/antic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+
+                android:id="@+id/signupbutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="30dp"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/antic"
+                android:text="@string/registernew"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
         </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.AppCompatButton
-
-            android:id="@+id/signupbutton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="40dp"
-            android:background="@color/colorPrimary"
-            android:fontFamily="@font/antic"
-            android:text="@string/registernew"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
