@@ -43,17 +43,13 @@ import static java.util.Collections.singleton;
 public class login extends AppCompatActivity {
 
     Button register, login, reset;
-    private static final String TAG = login.class.getSimpleName();
     private LocationManager mLocationManager = null;
-    private static final int LOCATION_INTERVAL = 1000;
-    private static final float LOCATION_DISTANCE = 0;
     static long startTime;
     TextInputEditText eusername, epass;
     TextInputLayout lusername, lpass;
     private FirebaseAuth auth;
     boolean isConnected = true;
     private boolean monitoringConnectivity = false;
-    Double lat1, lng1;
     FirebaseDatabase firebaseDatabase, fd;
     DatabaseReference databaseReference, dr;
     private ProgressBar bar;
@@ -77,30 +73,6 @@ public class login extends AppCompatActivity {
             startActivity(new Intent(login.this, main.class));
             finish();
         }
-        initializeLocationManager();
-
-        PermissionManager permissionManager = PermissionManager.getInstance(getApplicationContext());
-        permissionManager.checkPermissions(singleton(android.Manifest.permission.ACCESS_FINE_LOCATION), new PermissionManager.PermissionRequestListener(){
-            @Override
-            public void onPermissionGranted() {
-                Log.e(TAG, "onCreate");
-                initializeLocationManager();
-                try {
-                    mLocationManager.requestLocationUpdates(
-                            LocationManager.GPS_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
-                            mLocationListeners[0]);
-                } catch (java.lang.SecurityException ex) {
-                    Log.i(TAG, "Failed to request Location Update, ignore", ex);
-                } catch (IllegalArgumentException ex) {
-                    Log.d(TAG, "GPS Provider does not exist " + ex.getMessage());
-                }
-            }
-
-            @Override
-            public void onPermissionDenied() {
-                Toast.makeText(getApplicationContext(), "Permissions Denied", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         register = findViewById(R.id.registernewuser);
         login = findViewById(R.id.loginbutton);
@@ -169,59 +141,6 @@ public class login extends AppCompatActivity {
         });
 
 
-    }
-
-    private class LocationListener implements android.location.LocationListener
-    {
-        Location mLastLocation;
-
-        public LocationListener(String provider)
-        {
-            Log.e(TAG, "LocationListener " + provider);
-            mLastLocation = new Location(provider);
-
-        }
-
-        @Override
-        public void onLocationChanged(Location location)
-        {
-            Log.e(TAG, "onLocationChanged: " + location);
-            mLastLocation.set(location);
-            lat1 = location.getLatitude();
-            lng1 = location.getLongitude();
-            MapFragment.lat = lat1;
-            MapFragment.lng = lng1;
-
-        }
-
-        @Override
-        public void onProviderDisabled(String provider)
-        {
-            Log.e(TAG, "onProviderDisabled: " + provider);
-        }
-
-        @Override
-        public void onProviderEnabled(String provider)
-        {
-            Log.e(TAG, "onProviderEnabled: " + provider);
-        }
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras)
-        {
-            Log.e(TAG, "onStatusChanged: " + provider);
-        }
-    }
-
-    LocationListener[] mLocationListeners = new LocationListener[] {
-            new LocationListener(LocationManager.GPS_PROVIDER)
-    };
-
-    private void initializeLocationManager() {
-        Log.e(TAG, "initializeLocationManager");
-        if (mLocationManager == null) {
-            mLocationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-        }
     }
 
     private void getEmail(String user){
