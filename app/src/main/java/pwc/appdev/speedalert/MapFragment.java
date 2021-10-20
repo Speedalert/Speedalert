@@ -36,7 +36,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     static long startTime, endTime;
     public static TextView speed, distance, time, average;
     private Circle mCircle, mCircle1, mCircle2;
-    static double lat = 7.088769, lng = 125.620268;
+    static double lat, lng;
     private static final String mTitle = "Current Location";
     Marker marker1;
 

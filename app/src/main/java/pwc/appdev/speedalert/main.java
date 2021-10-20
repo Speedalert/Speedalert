@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -58,8 +59,15 @@ public class main extends AppCompatActivity
 
         if (!isMyServiceRunning(services.getClass())) {
 
-            startService(mServiceIntent);
 
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+
+                startForegroundService(mServiceIntent);
+            }
+            else {
+
+                startService(mServiceIntent);
+            }
         }
         auth = FirebaseAuth.getInstance();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -74,10 +82,10 @@ public class main extends AppCompatActivity
             useremail = users.getEmail();
             String[] part = useremail.split("@");
             parts[0] = part[0];
+            getName();
 
         }
-        
-        getName();
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -194,14 +202,19 @@ public class main extends AppCompatActivity
     @Override
     protected void onDestroy() {
 
-        stopService(mServiceIntent);
+        Intent broadcastIntent = new Intent();
+        broadcastIntent.setAction("RestartSensor");
+        broadcastIntent.setClass(this, Receiver.class);
+        this.sendBroadcast(broadcastIntent);
         super.onDestroy();
 
     }
 
     @Override
     public void onResume() {
+
         super.onResume();
+
     }
 
     @Override
@@ -239,6 +252,7 @@ public class main extends AppCompatActivity
 
         try{
 
+            System.out.println("My Email Address is: "+parts[0]);
             DatabaseReference getname = FirebaseDatabase.getInstance().getReference().child("Users");
             getname.child(parts[0]).child("fullname").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override

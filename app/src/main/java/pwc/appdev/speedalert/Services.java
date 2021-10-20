@@ -1,6 +1,13 @@
 package pwc.appdev.speedalert;
 
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.app.TaskStackBuilder;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -11,21 +18,23 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-import android.provider.Settings;
+import android.os.SystemClock;
 import android.util.Log;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.maps.android.PolyUtil;
 import com.intentfilter.androidpermissions.PermissionManager;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.concurrent.TimeUnit;
-
 import static java.util.Collections.singleton;
 
 public class Services extends Service {
@@ -41,10 +50,9 @@ public class Services extends Service {
     private FirebaseAuth auth;
     private String email = "";
     String oras = "";
-    Double lat1 = 7.088769, lat2, lng1 = 125.620268, lng2;
+    Double lat1, lat2, lng1, lng2;
     FirebaseDatabase fd;
     DatabaseReference dr;
-
 
     public Services() {
     }
@@ -52,6 +60,33 @@ public class Services extends Service {
     public Services(Context applicationContext) {
 
         super();
+    }
+
+    @Override
+    public void onCreate() {
+
+        PermissionManager permissionManager = PermissionManager.getInstance(getApplicationContext());
+        permissionManager.checkPermissions(singleton(android.Manifest.permission.ACCESS_FINE_LOCATION), new PermissionManager.PermissionRequestListener(){
+            @Override
+            public void onPermissionGranted() {
+                Log.e(TAG, "onCreate");
+                initializeLocationManager();
+                try {
+                    mLocationManager.requestLocationUpdates(
+                            LocationManager.GPS_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
+                            mLocationListeners[0]);
+                } catch (java.lang.SecurityException ex) {
+                    Log.i(TAG, "Failed to request Location Update, ignore", ex);
+                } catch (IllegalArgumentException ex) {
+                    Log.d(TAG, "GPS Provider does not exist " + ex.getMessage());
+                }
+            }
+
+            @Override
+            public void onPermissionDenied() {
+                Toast.makeText(getApplicationContext(), "Permissions Denied", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private class LocationListener implements android.location.LocationListener
@@ -107,32 +142,6 @@ public class Services extends Service {
             new LocationListener(LocationManager.GPS_PROVIDER)
     };
 
-    @Override
-    public void onCreate() {
-
-        PermissionManager permissionManager = PermissionManager.getInstance(getApplicationContext());
-        permissionManager.checkPermissions(singleton(android.Manifest.permission.ACCESS_FINE_LOCATION), new PermissionManager.PermissionRequestListener(){
-            @Override
-            public void onPermissionGranted() {
-                Log.e(TAG, "onCreate");
-                initializeLocationManager();
-                try {
-                    mLocationManager.requestLocationUpdates(
-                            LocationManager.GPS_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
-                            mLocationListeners[0]);
-                } catch (java.lang.SecurityException ex) {
-                    Log.i(TAG, "Failed to request Location Update, ignore", ex);
-                } catch (IllegalArgumentException ex) {
-                    Log.d(TAG, "GPS Provider does not exist " + ex.getMessage());
-                }
-            }
-
-            @Override
-            public void onPermissionDenied() {
-                Toast.makeText(getApplicationContext(), "Permissions Denied", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     private void initializeLocationManager() {
         Log.e(TAG, "initializeLocationManager");
@@ -141,27 +150,11 @@ public class Services extends Service {
         }
     }
 
-//    public void setLat(Double latitude){
-//        this.lat1 = latitude;
-//    }
-//
-//    public void setLng(Double longitude){
-//        this.lng1 = longitude;
-//    }
-//
-//    public Double getLat(){
-//        return this.lat1;
-//    }
-//
-//    public Double getLng(){
-//        return this.lng1;
-//    }
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         Log.i(TAG, "Service started");
-        super.onStartCommand(intent, flags, startId);
+        showNotification(this);
         auth = FirebaseAuth.getInstance();
         FirebaseUser users = auth.getCurrentUser();
         if (users != null) {
@@ -191,51 +184,15 @@ public class Services extends Service {
 
     }
 
+
     public void compare(){
 
-        MediaPlayer mp = MediaPlayer.create(this, R.raw.siren);
-        mp.stop();
+        MediaPlayer mp = new MediaPlayer();
 
         try{
 
-            lat2 = 7.088769;
-            lng2 = 125.620268;
-            double earthRadius = 6371;
-            double dlat = Math.toRadians(lat2 - lat1);
-            double dlng = Math.toRadians(lng2 - lng1);
-            double a = Math.sin(dlat/2) * Math.sin(dlat/2) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.sin(dlng/2) * Math.sin(dlng/2);
-            double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            double distance = earthRadius * c * 1000;
+            mp.start();
 
-            if (distance >= 1 || distance <= 3500){
-
-                if(speed > 30.0){
-
-                    mp.setLooping(true);
-                    mp.start();
-                }
-
-            }
-
-            else if(distance >=3501 || distance <= 10000 ){
-
-                if(speed > 40.0){
-
-                    mp.setLooping(true);
-                    mp.start();
-                }
-
-            }
-
-            else if(distance >=10001 || distance <= 17000){
-
-                if(speed > 60.0){
-
-                    mp.setLooping(true);
-                    mp.start();
-                }
-
-            }
         }
 
         catch(Exception e){
@@ -301,7 +258,48 @@ public class Services extends Service {
 
     }
 
-    @Nullable
+    public void showNotification(Context context) {
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        int notificationId = 1;
+        String channelId = "channel-01";
+        String channelName = "Channel Name";
+        int importance = NotificationManager.IMPORTANCE_HIGH;
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel mChannel = new NotificationChannel(
+                    channelId, channelName, importance);
+            notificationManager.createNotificationChannel(mChannel);
+        }
+
+        Intent intent1  = new Intent(this, main.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent1, 0);
+        Notification notification = new NotificationCompat.Builder(context, channelId)
+                .setContentTitle("SpeedAlert")
+                .setContentText("Your Location and Vehicle Speed is being monitored.")
+                .setAutoCancel(false)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentIntent(pendingIntent).build();
+
+        startForeground(notificationId, notification);
+
+    }
+
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        // TODO Auto-generated method stub
+        Intent restartService = new Intent(getApplicationContext(),
+                this.getClass());
+        restartService.setPackage(getPackageName());
+        PendingIntent restartServicePI = PendingIntent.getService(
+                getApplicationContext(), 1, restartService,
+                PendingIntent.FLAG_ONE_SHOT);
+
+        AlarmManager alarmService = (AlarmManager)getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        alarmService.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() +100, restartServicePI);
+
+    }
+
     @Override
     public IBinder onBind(Intent intent) {
 
@@ -311,8 +309,13 @@ public class Services extends Service {
     @Override
     public void onDestroy() {
 
+        stopForeground(false);
+        stopSelf();
+        Intent broadcastIntent = new Intent();
+        broadcastIntent.setAction("RestartSensor");
+        broadcastIntent.setClass(this, Receiver.class);
+        this.sendBroadcast(broadcastIntent);
         super.onDestroy();
-        Intent broadcastIntent = new Intent("RestartSensor");
-        sendBroadcast(broadcastIntent);
+
     }
 }
