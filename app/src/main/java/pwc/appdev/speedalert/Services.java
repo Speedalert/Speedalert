@@ -153,19 +153,31 @@ public class Services extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        Log.i(TAG, "Service started");
-        showNotification(this);
-        auth = FirebaseAuth.getInstance();
-        FirebaseUser users = auth.getCurrentUser();
-        if (users != null) {
+        String action = intent.getStringExtra("Action");
+        System.out.println("Value of String action is:"+action);
+        if (action.equals("StopService")) {
 
-            email = users.getEmail();
-
+            stopForeground(true);
+            stopSelf();
+            stopSelfResult(startId);
         }
-        fd = FirebaseDatabase.getInstance();
-        dr = fd.getReference();
 
-        new Handler(Looper.getMainLooper()).postDelayed(() -> setVal(locations), 500);
+        else if (action.equals("StartService")) {
+
+            Log.i(TAG, "Service started");
+            showNotification(this);
+            auth = FirebaseAuth.getInstance();
+            FirebaseUser users = auth.getCurrentUser();
+            if (users != null) {
+
+                email = users.getEmail();
+
+            }
+            fd = FirebaseDatabase.getInstance();
+            dr = fd.getReference();
+
+            new Handler(Looper.getMainLooper()).postDelayed(() -> setVal(locations), 500);
+        }
 
         return START_STICKY;
     }
@@ -235,14 +247,14 @@ public class Services extends Service {
                 oras = Long.toString(diff);
                 MapFragment.time.setText(oras);
                 if (speed > 0.0)
-                    MapFragment.speed.setText(new DecimalFormat("#.##").format(speed));
+                    MapFragment.speed.setText(new DecimalFormat("#.###").format(speed));
                 else
                     MapFragment.speed.setText("0.00");
 
                 MapFragment.distance.setText(new DecimalFormat("#.###").format(distance));
                 MapFragment.average.setText(new DecimalFormat("#.###").format(oldspeed));
                 lStart = lEnd;
-                String newspeed = (new DecimalFormat("#.##").format(speed));
+                String newspeed = (new DecimalFormat("#.###").format(speed));
                 String newdistance = (new DecimalFormat("#.###").format(distance));
                 String newaverage = (new DecimalFormat("#.###").format(oldspeed));
                 setValues(newspeed, oras, newdistance, newaverage);
@@ -264,7 +276,7 @@ public class Services extends Service {
         int notificationId = 1;
         String channelId = "channel-01";
         String channelName = "Channel Name";
-        int importance = NotificationManager.IMPORTANCE_HIGH;
+        int importance = NotificationManager.IMPORTANCE_LOW;
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationChannel mChannel = new NotificationChannel(
@@ -272,14 +284,11 @@ public class Services extends Service {
             notificationManager.createNotificationChannel(mChannel);
         }
 
-        Intent intent1  = new Intent(this, main.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent1, 0);
         Notification notification = new NotificationCompat.Builder(context, channelId)
                 .setContentTitle("SpeedAlert")
                 .setContentText("Your Location and Vehicle Speed is being monitored.")
                 .setAutoCancel(false)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentIntent(pendingIntent).build();
+                .setSmallIcon(R.mipmap.ic_launcher).build();
 
         startForeground(notificationId, notification);
 
@@ -309,7 +318,7 @@ public class Services extends Service {
     @Override
     public void onDestroy() {
 
-        stopForeground(false);
+        stopForeground(true);
         stopSelf();
         Intent broadcastIntent = new Intent();
         broadcastIntent.setAction("RestartSensor");

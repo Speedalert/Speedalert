@@ -38,6 +38,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.intentfilter.androidpermissions.PermissionManager;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import static java.util.Collections.singleton;
 
 public class login extends AppCompatActivity {
@@ -50,8 +53,8 @@ public class login extends AppCompatActivity {
     private FirebaseAuth auth;
     boolean isConnected = true;
     private boolean monitoringConnectivity = false;
-    FirebaseDatabase firebaseDatabase, fd;
-    DatabaseReference databaseReference, dr;
+    FirebaseDatabase firebaseDatabase, fd, fd1;
+    DatabaseReference databaseReference, dr, dr1;
     private ProgressBar bar;
     private ConstraintLayout layout;
     private static String passwords = " ";
@@ -61,7 +64,6 @@ public class login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        startTime = System.currentTimeMillis();
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -121,7 +123,7 @@ public class login extends AppCompatActivity {
 
                 else if(!isConnected){
 
-                    Snackbar sn = Snackbar.make(layout, "Authentication Failed, check your credentials.", Snackbar.LENGTH_SHORT);
+                    Snackbar sn = Snackbar.make(layout, "Authentication Failed, check your internet connection.", Snackbar.LENGTH_SHORT);
                     sn.show();
                 }
 
@@ -173,6 +175,7 @@ public class login extends AppCompatActivity {
 
                                                     setInitialValues();
                                                     bar.setVisibility(View.GONE);
+                                                    startTime = System.currentTimeMillis();
                                                     Intent intent = new Intent(login.this, main.class);
                                                     startActivity(intent);
                                                     finish();
@@ -236,14 +239,25 @@ public class login extends AppCompatActivity {
     private void setInitialValues () {
 
         Initial i = new Initial();
-        i.setSpeed("0.0");
+        i.setSpeed("0.000");
         i.setTime("0.0");
-        i.setDistance("0.0");
-        i.setAverage("0.0");
+        i.setDistance("0.000");
+        i.setAverage("0.000");
         i.setLocation("0.0");
 
         String[] parts = emails.split("@");
         dr.child("Users").child(parts[0]).child("Vehicle Data").setValue(i);
+        addLoginTime();
+
+    }
+
+    private void addLoginTime() {
+
+        fd1 = FirebaseDatabase.getInstance();
+        dr1 = fd1.getReference();
+        Date currentTime = Calendar.getInstance().getTime();
+        String[] parts = emails.split("@");
+        dr1.child("Users").child(parts[0]).child("Last Login Date & Time").setValue(currentTime.toString());
 
     }
 

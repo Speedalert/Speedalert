@@ -33,7 +33,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private OnFragmentInteractionListener mListener;
     private GoogleMap mMap;
     static int p = 0;
-    static long startTime, endTime;
     public static TextView speed, distance, time, average;
     private Circle mCircle, mCircle1, mCircle2;
     static double lat, lng;
@@ -49,7 +48,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_map, container, false);
-        startTime = System.currentTimeMillis();
         return v;
     }
 

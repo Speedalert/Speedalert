@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.common.internal.Constants;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,6 +33,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -42,20 +46,22 @@ public class main extends AppCompatActivity
                         MapFragment.OnFragmentInteractionListener {
 
     private FirebaseAuth auth;
-    Intent mServiceIntent;
     private String useremail = " ";
     private String name = " ";
     private CircleImageView imageViewNav;
     private TextView fname,femail;
     private DrawerLayout drawer;
     private String[] parts = new String[2];
+    FirebaseDatabase fd;
+    DatabaseReference dr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Services services = new Services(this);
-        mServiceIntent = new Intent(this, services.getClass());
+        Intent mServiceIntent = new Intent(main.this, Services.class);
+        mServiceIntent.putExtra("Action", "StartService");
 
         if (!isMyServiceRunning(services.getClass())) {
 
@@ -120,6 +126,7 @@ public class main extends AppCompatActivity
 
         try{
 
+            addLogoutTime();
             auth.signOut();
             startActivity(new Intent(main.this, login.class));
             finish();
@@ -358,6 +365,27 @@ public class main extends AppCompatActivity
 
         }
 
+    }
+
+    private void addLogoutTime() {
+
+        fd = FirebaseDatabase.getInstance();
+        dr = fd.getReference();
+
+        Date currentTime = Calendar.getInstance().getTime();
+        String[] parts = useremail.split("@");
+        dr.child("Users").child(parts[0]).child("Last Logout Date & Time").setValue(currentTime.toString());
+        Intent stopIntent = new Intent(main.this, Services.class);
+        stopIntent.putExtra("Action", "StopService");
+        startService(stopIntent);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+
+            startForegroundService(stopIntent);
+        }
+        else {
+
+            startService(stopIntent);
+        }
     }
 
 }
