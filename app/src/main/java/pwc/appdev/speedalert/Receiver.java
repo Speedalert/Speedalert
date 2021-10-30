@@ -10,14 +10,17 @@ public class Receiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
+        Intent mServiceIntent = new Intent(context, Services.class);
+        mServiceIntent.setAction(Services.ACTION_START_FOREGROUND_SERVICE);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-            context.startForegroundService(new Intent(context, Services.class));
+            context.startForegroundService(mServiceIntent);
         }
 
         else {
 
-            context.startService(new Intent(context, Services.class));
+            context.startService(mServiceIntent);
         }
     }
 }

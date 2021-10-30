@@ -46,7 +46,8 @@
 
         <service
             android:name=".Services"
-            android:enabled="true" />
+            android:enabled="true"
+            android:stopWithTask="false"/>
 
         <receiver
             android:name=".Receiver"

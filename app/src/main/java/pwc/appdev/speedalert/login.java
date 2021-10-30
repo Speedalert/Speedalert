@@ -1,5 +1,6 @@
 package pwc.appdev.speedalert;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -9,6 +10,7 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkRequest;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
@@ -69,6 +71,23 @@ public class login extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.login);
+        Services services = new Services(this);
+        Intent mServiceIntent = new Intent(login.this, Services.class);
+        mServiceIntent.setAction(Services.ACTION_STOP_FOREGROUND_SERVICE);
+
+        if (isMyServiceRunning(services.getClass())) {
+
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+
+                startForegroundService(mServiceIntent);
+            }
+
+            else {
+
+                startService(mServiceIntent);
+            }
+        }
         auth = FirebaseAuth.getInstance();
         layout = findViewById(R.id.loginconstraint);
         if(auth.getCurrentUser() != null){
@@ -143,6 +162,18 @@ public class login extends AppCompatActivity {
         });
 
 
+    }
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void getEmail(String user){

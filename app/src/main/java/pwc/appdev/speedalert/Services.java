@@ -53,6 +53,9 @@ public class Services extends Service {
     Double lat1, lat2, lng1, lng2;
     FirebaseDatabase fd;
     DatabaseReference dr;
+    private static final String TAG_FOREGROUND_SERVICE = "FOREGROUND_SERVICE";
+    public static final String ACTION_START_FOREGROUND_SERVICE = "ACTION_START_FOREGROUND_SERVICE";
+    public static final String ACTION_STOP_FOREGROUND_SERVICE = "ACTION_STOP_FOREGROUND_SERVICE";
 
     public Services() {
     }
@@ -153,30 +156,37 @@ public class Services extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        String action = intent.getStringExtra("Action");
-        System.out.println("Value of String action is:"+action);
-        if (action.equals("StopService")) {
+        auth = FirebaseAuth.getInstance();
 
-            stopForeground(true);
-            stopSelf();
-            stopSelfResult(startId);
-        }
+        if(intent != null){
 
-        else if (action.equals("StartService")) {
+            String action = intent.getAction();
+            System.out.println("Current Action in Service Start: "+action);
 
-            Log.i(TAG, "Service started");
-            showNotification(this);
-            auth = FirebaseAuth.getInstance();
-            FirebaseUser users = auth.getCurrentUser();
-            if (users != null) {
+            switch(action){
 
-                email = users.getEmail();
+                case ACTION_START_FOREGROUND_SERVICE:
 
+                    Log.i(TAG, "Service started");
+                    showNotification(this);
+                    FirebaseUser users = auth.getCurrentUser();
+                    if (users != null) {
+
+                        email = users.getEmail();
+
+                    }
+                    fd = FirebaseDatabase.getInstance();
+                    dr = fd.getReference();
+
+                    new Handler(Looper.getMainLooper()).postDelayed(() -> setVal(locations), 500);
+                    break;
+
+                case ACTION_STOP_FOREGROUND_SERVICE:
+
+                    stopForeground(true);
+                    stopSelf();
+                    stopSelfResult(startId);
             }
-            fd = FirebaseDatabase.getInstance();
-            dr = fd.getReference();
-
-            new Handler(Looper.getMainLooper()).postDelayed(() -> setVal(locations), 500);
         }
 
         return START_STICKY;
@@ -300,6 +310,7 @@ public class Services extends Service {
         Intent restartService = new Intent(getApplicationContext(),
                 this.getClass());
         restartService.setPackage(getPackageName());
+        restartService.setAction(Services.ACTION_START_FOREGROUND_SERVICE);
         PendingIntent restartServicePI = PendingIntent.getService(
                 getApplicationContext(), 1, restartService,
                 PendingIntent.FLAG_ONE_SHOT);
@@ -320,10 +331,10 @@ public class Services extends Service {
 
         stopForeground(true);
         stopSelf();
-        Intent broadcastIntent = new Intent();
-        broadcastIntent.setAction("RestartSensor");
-        broadcastIntent.setClass(this, Receiver.class);
-        this.sendBroadcast(broadcastIntent);
+//        Intent broadcastIntent = new Intent();
+//        broadcastIntent.setAction("RestartSensor");
+//        broadcastIntent.setClass(this, Receiver.class);
+//        this.sendBroadcast(broadcastIntent);
         super.onDestroy();
 
     }

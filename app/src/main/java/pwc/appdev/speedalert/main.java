@@ -61,15 +61,15 @@ public class main extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Services services = new Services(this);
         Intent mServiceIntent = new Intent(main.this, Services.class);
-        mServiceIntent.putExtra("Action", "StartService");
+        mServiceIntent.setAction(Services.ACTION_START_FOREGROUND_SERVICE);
 
         if (!isMyServiceRunning(services.getClass())) {
-
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
 
                 startForegroundService(mServiceIntent);
             }
+
             else {
 
                 startService(mServiceIntent);
@@ -126,11 +126,14 @@ public class main extends AppCompatActivity
 
         try{
 
-            addLogoutTime();
+            fd = FirebaseDatabase.getInstance();
+            dr = fd.getReference();
+            Date currentTime = Calendar.getInstance().getTime();
+            String[] parts = useremail.split("@");
+            dr.child("Users").child(parts[0]).child("Last Logout Date & Time").setValue(currentTime.toString());
             auth.signOut();
-            startActivity(new Intent(main.this, login.class));
-            finish();
-
+            Intent intent = new Intent(main.this, login.class);
+            startActivity(intent);
         }
 
         catch(Exception e){
@@ -209,10 +212,10 @@ public class main extends AppCompatActivity
     @Override
     protected void onDestroy() {
 
-        Intent broadcastIntent = new Intent();
-        broadcastIntent.setAction("RestartSensor");
-        broadcastIntent.setClass(this, Receiver.class);
-        this.sendBroadcast(broadcastIntent);
+//        Intent broadcastIntent = new Intent();
+//        broadcastIntent.setAction("RestartSensor");
+//        broadcastIntent.setClass(this, Receiver.class);
+//        this.sendBroadcast(broadcastIntent);
         super.onDestroy();
 
     }
@@ -366,26 +369,4 @@ public class main extends AppCompatActivity
         }
 
     }
-
-    private void addLogoutTime() {
-
-        fd = FirebaseDatabase.getInstance();
-        dr = fd.getReference();
-
-        Date currentTime = Calendar.getInstance().getTime();
-        String[] parts = useremail.split("@");
-        dr.child("Users").child(parts[0]).child("Last Logout Date & Time").setValue(currentTime.toString());
-        Intent stopIntent = new Intent(main.this, Services.class);
-        stopIntent.putExtra("Action", "StopService");
-        startService(stopIntent);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-
-            startForegroundService(stopIntent);
-        }
-        else {
-
-            startService(stopIntent);
-        }
-    }
-
 }
