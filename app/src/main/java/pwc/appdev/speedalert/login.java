@@ -3,7 +3,6 @@ package pwc.appdev.speedalert;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.Network;
@@ -12,7 +11,6 @@ import android.net.NetworkInfo;
 import android.net.NetworkRequest;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -20,8 +18,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -38,46 +34,41 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.intentfilter.androidpermissions.PermissionManager;
-
 import java.util.Calendar;
 import java.util.Date;
-
-import static java.util.Collections.singleton;
 
 public class login extends AppCompatActivity {
 
     Button register, login, reset;
-    private LocationManager mLocationManager = null;
-    static long startTime;
     TextInputEditText eusername, epass;
     TextInputLayout lusername, lpass;
     private FirebaseAuth auth;
     boolean isConnected = true;
     private boolean monitoringConnectivity = false;
-    FirebaseDatabase firebaseDatabase, fd, fd1;
-    DatabaseReference databaseReference, dr, dr1;
+    FirebaseDatabase firebaseDatabase, fd, fd1, fd2, fd3;
+    DatabaseReference databaseReference, dr, dr1, dr2, dr3;
     private ProgressBar bar;
     private ConstraintLayout layout;
     private static String passwords = " ";
     private static String emails = " ";
+    static long startTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.login);
+
+        if(!CheckGpsStatus()){
+
+            startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+        }
+
         Services services = new Services(this);
         Intent mServiceIntent = new Intent(login.this, Services.class);
         mServiceIntent.setAction(Services.ACTION_STOP_FOREGROUND_SERVICE);
 
         if (isMyServiceRunning(services.getClass())) {
-
-
+            
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
 
                 startForegroundService(mServiceIntent);
@@ -88,12 +79,20 @@ public class login extends AppCompatActivity {
                 startService(mServiceIntent);
             }
         }
+
         auth = FirebaseAuth.getInstance();
-        layout = findViewById(R.id.loginconstraint);
         if(auth.getCurrentUser() != null){
+
             startActivity(new Intent(login.this, main.class));
             finish();
         }
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.login);
+        layout = findViewById(R.id.loginconstraint);
 
         register = findViewById(R.id.registernewuser);
         login = findViewById(R.id.loginbutton);
@@ -106,12 +105,6 @@ public class login extends AppCompatActivity {
         FirebaseApp.initializeApp(login.this);
         fd = FirebaseDatabase.getInstance();
         dr = fd.getReference();
-
-        if(!CheckGpsStatus()){
-
-            startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-
-        }
 
         register.setOnClickListener(v -> startActivity(new Intent(login.this, Signup.class)));
 
@@ -176,6 +169,15 @@ public class login extends AppCompatActivity {
         return false;
     }
 
+    public boolean CheckGpsStatus() {
+
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        boolean GpsStatus = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        return GpsStatus;
+    }
+
     private void getEmail(String user){
 
         try{
@@ -205,12 +207,12 @@ public class login extends AppCompatActivity {
                                                 if(task.isSuccessful()){
 
                                                     setInitialValues();
-                                                    bar.setVisibility(View.GONE);
                                                     startTime = System.currentTimeMillis();
+                                                    setStartTime(startTime);
+                                                    bar.setVisibility(View.GONE);
                                                     Intent intent = new Intent(login.this, main.class);
                                                     startActivity(intent);
                                                     finish();
-
                                                 }
 
                                                 else {
@@ -267,29 +269,77 @@ public class login extends AppCompatActivity {
         }
     }
 
-    private void setInitialValues () {
+    private void setStartTime(Long a){
 
-        Initial i = new Initial();
-        i.setSpeed("0.000");
-        i.setTime("0.0");
-        i.setDistance("0.000");
-        i.setAverage("0.000");
-        i.setLocation("0.0");
+        try{
 
-        String[] parts = emails.split("@");
-        dr.child("Users").child(parts[0]).child("Vehicle Data").setValue(i);
-        addLoginTime();
+            fd3 = FirebaseDatabase.getInstance();
+            dr3 = fd3.getReference();
+            String[] parts = emails.split("@");
+            dr3.child("Users").child(parts[0]).child("Start Time").setValue(a);
+        }
 
+        catch(Exception e){
+
+            System.out.println("Login (setStartTime): "+e);
+        }
+    }
+
+    private void setInitialValues() {
+
+        try{
+
+            Initial i = new Initial();
+            i.setSpeed("0.000");
+            i.setTime("0.0");
+            i.setDistance("0.000");
+            i.setAverage("0.000");
+            i.setLocation("0.0");
+
+            String[] parts = emails.split("@");
+            dr.child("Users").child(parts[0]).child("Vehicle Data").setValue(i);
+            addLoginTime();
+        }
+
+        catch(Exception e){
+
+            System.out.println("Login (setInitialValues): "+e);
+        }
     }
 
     private void addLoginTime() {
 
-        fd1 = FirebaseDatabase.getInstance();
-        dr1 = fd1.getReference();
-        Date currentTime = Calendar.getInstance().getTime();
-        String[] parts = emails.split("@");
-        dr1.child("Users").child(parts[0]).child("Last Login Date & Time").setValue(currentTime.toString());
+        try{
 
+            fd1 = FirebaseDatabase.getInstance();
+            dr1 = fd1.getReference();
+            Date currentTime = Calendar.getInstance().getTime();
+            String[] parts = emails.split("@");
+            dr1.child("Users").child(parts[0]).child("Last Login Date & Time").setValue(currentTime.toString());
+            setStatus();
+
+        }
+
+        catch(Exception e){
+
+            System.out.println("Login (addLoginTime): "+e);
+        }
+    }
+
+    private void setStatus() {
+
+        try{
+
+            fd2 = FirebaseDatabase.getInstance();
+            dr2 = fd2.getReference();
+            String[] parts = emails.split("@");
+            dr2.child("Users").child(parts[0]).child("User Status").setValue("Active");
+        }
+
+        catch(Exception e){
+
+            System.out.println("Login (setStatus): "+e);
+        }
     }
 
     @Override
@@ -314,15 +364,6 @@ public class login extends AppCompatActivity {
 
         super.onPause();
 
-    }
-
-    public boolean CheckGpsStatus() {
-
-        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
-        boolean GpsStatus = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-
-        return GpsStatus;
     }
 
     private final ConnectivityManager.NetworkCallback connectivityCallback

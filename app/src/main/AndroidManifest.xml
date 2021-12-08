@@ -53,7 +53,8 @@
             android:name=".Receiver"
             android:enabled="true"
             android:exported="true"
-            android:label="RestartSensor">
+            android:label="RestartSensor"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>
                 <action android:name="RestartSensor"
                     android:enabled="true"
@@ -61,7 +62,6 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

@@ -5,22 +5,33 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class Receiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        Intent mServiceIntent = new Intent(context, Services.class);
-        mServiceIntent.setAction(Services.ACTION_START_FOREGROUND_SERVICE);
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser users = auth.getCurrentUser();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if(Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())){
 
-            context.startForegroundService(mServiceIntent);
-        }
+            if(users != null){
 
-        else {
+                Intent mServiceIntent = new Intent(context, Services.class);
+                mServiceIntent.setAction(Services.ACTION_START_FOREGROUND_SERVICE);
 
-            context.startService(mServiceIntent);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+                    context.startForegroundService(mServiceIntent);
+                }
+                else {
+
+                    context.startService(mServiceIntent);
+                }
+            }
         }
     }
 }

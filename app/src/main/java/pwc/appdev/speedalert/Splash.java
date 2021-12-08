@@ -18,12 +18,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Splash extends AppCompatActivity {
 
-    private static int SPLASH_SCREEN = 3000;
+    private static final int SPLASH_SCREEN = 3000;
     ImageView image;
     TextView text;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(

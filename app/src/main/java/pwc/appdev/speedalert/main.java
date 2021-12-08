@@ -8,24 +8,26 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
-
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
+import android.net.NetworkRequest;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
-import com.google.android.gms.common.internal.Constants;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -33,10 +35,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.Calendar;
 import java.util.Date;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class main extends AppCompatActivity
@@ -48,15 +48,18 @@ public class main extends AppCompatActivity
     private FirebaseAuth auth;
     private String useremail = " ";
     private String name = " ";
+    boolean isConnected = true;
+    private boolean monitoringConnectivity = false;
     private CircleImageView imageViewNav;
     private TextView fname,femail;
-    private DrawerLayout drawer;
+    private DrawerLayout drawer, mRoot;
     private String[] parts = new String[2];
-    FirebaseDatabase fd;
-    DatabaseReference dr;
+    FirebaseDatabase fd, fd1, fd2;
+    DatabaseReference dr, dr1, dr2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Services services = new Services(this);
@@ -64,6 +67,7 @@ public class main extends AppCompatActivity
         mServiceIntent.setAction(Services.ACTION_START_FOREGROUND_SERVICE);
 
         if (!isMyServiceRunning(services.getClass())) {
+
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
 
@@ -75,13 +79,13 @@ public class main extends AppCompatActivity
                 startService(mServiceIntent);
             }
         }
-        auth = FirebaseAuth.getInstance();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if(getSupportActionBar()!= null){
             getSupportActionBar().hide();
         }
 
+        auth = FirebaseAuth.getInstance();
         FirebaseUser users = auth.getCurrentUser();
         if (users != null) {
 
@@ -132,14 +136,50 @@ public class main extends AppCompatActivity
             String[] parts = useremail.split("@");
             dr.child("Users").child(parts[0]).child("Last Logout Date & Time").setValue(currentTime.toString());
             auth.signOut();
+            setStatusInActive();
+            finish();
             Intent intent = new Intent(main.this, login.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
 
         catch(Exception e){
 
-            Log.e("onSignOut", e.getMessage(), e);
+            Log.e("Main (onSignOut): ", e.getMessage(), e);
 
+        }
+    }
+
+    private void setStatusActive() {
+
+        try{
+
+            fd1 = FirebaseDatabase.getInstance();
+            dr1 = fd1.getReference();
+            String[] parts = useremail.split("@");
+            dr1.child("Users").child(parts[0]).child("User Status").setValue("Active");
+        }
+
+        catch(Exception e){
+
+            System.out.println("Main (setStatusActive): "+e);
+        }
+    }
+
+    private void setStatusInActive() {
+
+        try{
+
+            fd2 = FirebaseDatabase.getInstance();
+            dr2 = fd2.getReference();
+            String[] parts = useremail.split("@");
+            dr2.child("Users").child(parts[0]).child("User Status").setValue("Inactive");
+        }
+
+        catch(Exception e){
+
+            System.out.println("Main (setStatusInactive): "+e);
         }
     }
 
@@ -212,10 +252,7 @@ public class main extends AppCompatActivity
     @Override
     protected void onDestroy() {
 
-//        Intent broadcastIntent = new Intent();
-//        broadcastIntent.setAction("RestartSensor");
-//        broadcastIntent.setClass(this, Receiver.class);
-//        this.sendBroadcast(broadcastIntent);
+        setStatusInActive();
         super.onDestroy();
 
     }
@@ -223,8 +260,17 @@ public class main extends AppCompatActivity
     @Override
     public void onResume() {
 
+        setStatusActive();
+        checkConnectivity();
         super.onResume();
 
+    }
+
+    @Override
+    public void onPause(){
+
+        setStatusInActive();
+        super.onPause();
     }
 
     @Override
@@ -243,14 +289,11 @@ public class main extends AppCompatActivity
         if (count == 0) {
 
             super.onBackPressed();
-
         }
-
         else {
 
             getSupportFragmentManager().popBackStack();
         }
-
     }
 
     @Override
@@ -279,39 +322,27 @@ public class main extends AppCompatActivity
                                 getProfile();
 
                             }
-
                             else{
 
                                 Log.d("onGetName", "No Name Retrieved.");
-
                             }
-
                         }
-
                         catch(Exception e){
 
                             Log.e("onGetName", e.getMessage(), e);
-
                         }
-
                     }
-
                 }
-
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
 
                 }
             });
-
         }
-
         catch(Exception e){
 
             Log.e("onGetName", e.getMessage(), e);
-
         }
-
     }
 
     private void getProfile(){
@@ -333,38 +364,76 @@ public class main extends AppCompatActivity
                                 Glide.with(main.this).load(urladds).into(imageViewNav);
                                 fname.setText(name);
                                 femail.setText(useremail);
-
                             }
                             else{
 
                                 Log.d("getProfile", "No Profile was retrieved");
-
                             }
-
                         }
-
                         catch(Exception e){
 
                             Log.e("onGetProfile", e.getMessage(), e);
-
                         }
-
                     }
-
                 }
-
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-
-
 
                 }
             });
         }
-
         catch(Exception e){
 
             Log.e("onGetProfile", e.getMessage(), e);
+        }
+
+    }
+
+
+    private final ConnectivityManager.NetworkCallback connectivityCallback
+            = new ConnectivityManager.NetworkCallback() {
+        @Override
+        public void onAvailable(Network network) {
+            isConnected = true;
+            mRoot = (DrawerLayout) findViewById(R.id.drawer_layout);
+            Snackbar snonavail = Snackbar.make(mRoot, "Connection Established!", Snackbar.LENGTH_SHORT);
+            snonavail.show();
+
+        }
+        @Override
+        public void onLost(Network network) {
+            isConnected = false;
+            mRoot = (DrawerLayout) findViewById(R.id.drawer_layout);
+            Snackbar snonlost = Snackbar.make(mRoot, "Connection Lost!", Snackbar.LENGTH_INDEFINITE);
+            snonlost.show();
+        }
+    };
+
+    private void checkConnectivity() {
+
+        final ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(
+                Context.CONNECTIVITY_SERVICE);
+
+        final NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        isConnected = activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+
+        if (!isConnected) {
+            mRoot = (DrawerLayout) findViewById(R.id.drawer_layout);
+            Snackbar sncc = Snackbar.make(mRoot, "No Connection!", Snackbar.LENGTH_INDEFINITE);
+            sncc.show();
+            connectivityManager.registerNetworkCallback(
+                    new NetworkRequest.Builder()
+                            .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                            .build(), connectivityCallback);
+            monitoringConnectivity = true;
+        }
+        else {
+
+            connectivityManager.registerNetworkCallback(
+                    new NetworkRequest.Builder()
+                            .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                            .build(), connectivityCallback);
+            monitoringConnectivity = true;
 
         }
 

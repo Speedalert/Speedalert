@@ -35,5 +35,6 @@
     <string name="tv_max_speed">Total Time (min):</string>
     <string name="editprofile">Edit Profile</string>
     <string name="saveprofile">Save Changes</string>
+    <string name="zerospeed">0.000</string>
 
 </resources>
