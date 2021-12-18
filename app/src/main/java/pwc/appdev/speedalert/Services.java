@@ -1,5 +1,6 @@
 package pwc.appdev.speedalert;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -18,7 +19,6 @@ import android.util.Log;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
-
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,7 +30,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.maps.android.PolyUtil;
 import com.intentfilter.androidpermissions.PermissionManager;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static java.util.Collections.singleton;
@@ -46,12 +48,12 @@ public class Services extends Service {
     static double distance = 0;
     double speed, oldspeed = 0.00;
     private FirebaseAuth auth;
-    private String email;
+    private String email, fullname, platenumber;
     public static String oras, newspeed, newdistance, newaverage;
     public static String stringaverage = "0.000";
     Double lat1, lat2, lng1, lng2;
-    FirebaseDatabase fd, fd1;
-    DatabaseReference dr, dr1;
+    FirebaseDatabase fd, fd1, fd2, fd3;
+    DatabaseReference dr, dr1, dr2, dr3;
     private long sTime, min;
     public static final String ACTION_START_FOREGROUND_SERVICE = "ACTION_START_FOREGROUND_SERVICE";
     public static final String ACTION_STOP_FOREGROUND_SERVICE = "ACTION_STOP_FOREGROUND_SERVICE";
@@ -93,6 +95,13 @@ public class Services extends Service {
     public List<LatLng> ftorres = new ArrayList<>();
     public List<LatLng> bacaca = new ArrayList<>();
     public List<LatLng> medical = new ArrayList<>();
+    public List<LatLng> selga = new ArrayList<>();
+    public List<LatLng> ljtoapo = new ArrayList<>();
+    public List<LatLng> generalmalvar = new ArrayList<>();
+    public List<LatLng> sanpedroext = new ArrayList<>();
+    public List<LatLng> camusext = new ArrayList<>();
+    public List<LatLng> loyola = new ArrayList<>();
+    public List<LatLng> testlocation = new ArrayList<>();
 
     public Services() {
     }
@@ -1473,6 +1482,123 @@ public class Services extends Service {
         medical.add(new LatLng(7.084210748639811, 125.60581428786344));
         medical.add(new LatLng(7.08418011599004, 125.60573064633986));
 
+        // Fr. Selga (30 kph zone - Tolerance 15 M
+
+        selga.add(new LatLng(7.077732089808884, 125.59503493674178));
+        selga.add(new LatLng(7.077527027751292, 125.59515715013463));
+        selga.add(new LatLng(7.077209334595789, 125.5954204584088));
+        selga.add(new LatLng(7.0769579261380295, 125.59567263783191));
+        selga.add(new LatLng(7.0766999088377425, 125.59587004780853));
+        selga.add(new LatLng(7.0764104405803785, 125.5960799306587));
+        selga.add(new LatLng(7.076383822800746, 125.59611949324005));
+        selga.add(new LatLng(7.076371844799412, 125.59617984294043));
+        selga.add(new LatLng(7.076531465355877, 125.59706453595109));
+        selga.add(new LatLng(7.076536788909514, 125.59719462308838));
+        selga.add(new LatLng(7.076521483690005, 125.59730727586803));
+        selga.add(new LatLng(7.076265545042872, 125.59801343589194));
+        selga.add(new LatLng(7.075860113750422, 125.59871114733335));
+        selga.add(new LatLng(7.075438947044602, 125.59934264881235));
+        selga.add(new LatLng(7.07527724366683, 125.5995545433228));
+        selga.add(new LatLng(7.075142945036807, 125.59966952783421));
+        selga.add(new LatLng(7.074418122017077, 125.60011133294472));
+        selga.add(new LatLng(7.073984634124014, 125.60031969754087));
+        selga.add(new LatLng(7.073900641613697, 125.600354798219));
+        selga.add(new LatLng(7.073535861503172, 125.60053210404426));
+        selga.add(new LatLng(7.073073746159051, 125.6006979706846));
+        selga.add(new LatLng(7.07284131671922, 125.60072231384844));
+        selga.add(new LatLng(7.072613256017293, 125.60071292856908));
+        selga.add(new LatLng(7.072314013697219, 125.60064816248212));
+        selga.add(new LatLng(7.071547081339508, 125.60039704097332));
+        selga.add(new LatLng(7.071177370683372, 125.60027230315296));
+        selga.add(new LatLng(7.070971497252158, 125.60024427522794));
+        selga.add(new LatLng(7.070375976707797, 125.60024566793822));
+        selga.add(new LatLng(7.07025382094129, 125.60028217266905));
+        selga.add(new LatLng(7.070135370230844, 125.60035660396615));
+        selga.add(new LatLng(7.069801160980437, 125.6007759266623));
+        selga.add(new LatLng(7.069174212223042, 125.60176515587474));
+        selga.add(new LatLng(7.069143758811559, 125.60180657501756));
+        selga.add(new LatLng(7.068549953111815, 125.60247926082194));
+        selga.add(new LatLng(7.068312820259605, 125.60273774001924));
+
+        // Lopez Jaena to Mt. Apo (30 kph zone - Tolerance 15 M)
+
+        ljtoapo.add(new LatLng(7.075588004450959, 125.60332939054607));
+        ljtoapo.add(new LatLng(7.075172309421431, 125.60364348531186));
+        ljtoapo.add(new LatLng(7.0746050249665355, 125.60412995695258));
+        ljtoapo.add(new LatLng(7.074329566164634, 125.60436716316298));
+        ljtoapo.add(new LatLng(7.074031878215309, 125.60460057203173));
+        ljtoapo.add(new LatLng(7.073630575364372, 125.60492828545938));
+        ljtoapo.add(new LatLng(7.073217438691252, 125.60526232186164));
+        ljtoapo.add(new LatLng(7.072623454518778, 125.6051915015152));
+        ljtoapo.add(new LatLng(7.071898680581672, 125.6051082051121));
+        ljtoapo.add(new LatLng(7.0718401208922, 125.60509345296313));
+        ljtoapo.add(new LatLng(7.0717155306788495, 125.60507846223705));
+        ljtoapo.add(new LatLng(7.071632643502668, 125.60506845793188));
+        ljtoapo.add(new LatLng(7.07126385812682, 125.6050194081005));
+        ljtoapo.add(new LatLng(7.070575437991146, 125.6049238911658));
+        ljtoapo.add(new LatLng(7.070095835759404, 125.60487884809628));
+
+        // General Malvar St. (30 kph zone - Tolerance 15 M)
+
+        generalmalvar.add(new LatLng(7.073068579229539, 125.6007184839911));
+        generalmalvar.add(new LatLng(7.072922142844392, 125.60130431438182));
+        generalmalvar.add(new LatLng(7.072854932437573, 125.60150078619877));
+        generalmalvar.add(new LatLng(7.07261270871673, 125.60191585804063));
+        generalmalvar.add(new LatLng(7.072273488028672, 125.60238134527151));
+        generalmalvar.add(new LatLng(7.071964718917693, 125.60283061528406));
+        generalmalvar.add(new LatLng(7.070895675866237, 125.60433558473609));
+        generalmalvar.add(new LatLng(7.070515370243936, 125.60490225166572));
+
+        // San Pedro Ext. (30 kph zone - Tolerance 15 M)
+
+        sanpedroext.add(new LatLng(7.07228781578691, 125.60066371681698));
+        sanpedroext.add(new LatLng(7.071343266598697, 125.60140732197311));
+        sanpedroext.add(new LatLng(7.070917705891625, 125.60170203183361));
+        sanpedroext.add(new LatLng(7.070472475179667, 125.60202482949491));
+        sanpedroext.add(new LatLng(7.069782024313059, 125.6025054945468));
+        sanpedroext.add(new LatLng(7.069279415169537, 125.60308146881744));
+        sanpedroext.add(new LatLng(7.068947386929593, 125.60346480325978));
+
+        // J Camus Ext. (30 kph zone - Tolerance 15 M)
+
+        camusext.add(new LatLng(7.077266840705978, 125.60372597825652));
+        camusext.add(new LatLng(7.076939318998415, 125.60405499650761));
+        camusext.add(new LatLng(7.0764993658464475, 125.604404411648));
+        camusext.add(new LatLng(7.0760921137196355, 125.60474505219359));
+        camusext.add(new LatLng(7.075645599945751, 125.60511854980163));
+        camusext.add(new LatLng(7.074940877368486, 125.60570978758942));
+        camusext.add(new LatLng(7.074550634053723, 125.60603295068358));
+        camusext.add(new LatLng(7.074139350038844, 125.60636640674552));
+        camusext.add(new LatLng(7.073740410093836, 125.60669307273105));
+        camusext.add(new LatLng(7.073556996057154, 125.60681958289676));
+        camusext.add(new LatLng(7.07336639498186, 125.60694845575597));
+        camusext.add(new LatLng(7.073318482661496, 125.60696656066608));
+        camusext.add(new LatLng(7.0722681752812635, 125.60706045376338));
+        camusext.add(new LatLng(7.07224409506361, 125.60706432944629));
+        camusext.add(new LatLng(7.071937537593171, 125.6070993443904));
+
+        // Loyola St. (30 kph zone - Tolerance 15 M)
+
+        loyola.add(new LatLng(7.0880647074225935, 125.62030791483691));
+        loyola.add(new LatLng(7.087716419137281, 125.61991254790162));
+        loyola.add(new LatLng(7.087563566808061, 125.61971976253773));
+        loyola.add(new LatLng(7.087085061787737, 125.61913313944324));
+        loyola.add(new LatLng(7.086036288220177, 125.61790542074186));
+        loyola.add(new LatLng(7.08562438649419, 125.61739714213115));
+        loyola.add(new LatLng(7.084056898042247, 125.61548488515466));
+        loyola.add(new LatLng(7.083619702649313, 125.614918615268));
+        loyola.add(new LatLng(7.083080217402028, 125.61427540641004));
+        loyola.add(new LatLng(7.083067574137759, 125.61423316161589));
+        loyola.add(new LatLng(7.083031004821841, 125.61407409120041));
+        loyola.add(new LatLng(7.082951818057398, 125.61334587145481));
+        loyola.add(new LatLng(7.082887641749852, 125.61282049466652));
+        loyola.add(new LatLng(7.0828547042729255, 125.61252316172211));
+
+        // Test Location only
+
+        testlocation.add(new LatLng(7.105388596187022, 125.61951753473438));
+        testlocation.add(new LatLng(7.104996673881563, 125.61974284028868));
+
     }
 
     private class LocationListener implements android.location.LocationListener
@@ -1493,11 +1619,8 @@ public class Services extends Service {
             locations = location;
             mLastLocation.set(location);
             speed = location.getSpeed() * 18 / 5;
-            System.out.println("Current Speed is: "+speed);
             lat1 = location.getLatitude();
             lng1 = location.getLongitude();
-            System.out.println("Current Latitude is: "+lat1);
-            System.out.println("Current Longitude is: "+lng1);
             compare();
             setVal(location);
 
@@ -1541,7 +1664,6 @@ public class Services extends Service {
         if(intent != null){
 
             String action = intent.getAction();
-            System.out.println("Current Action in Service Start: "+action);
 
             switch(action){
 
@@ -1553,6 +1675,7 @@ public class Services extends Service {
                     if (users != null) {
 
                         email = users.getEmail();
+                        getName();
 
                     }
                     fd = FirebaseDatabase.getInstance();
@@ -1577,22 +1700,46 @@ public class Services extends Service {
         MediaPlayer mp;
         mp = MediaPlayer.create(this, R.raw.siren);
         LatLng point = (new LatLng(lat1, lng1));
+        String l = lat1.toString();
+        String lg = lng1.toString();
 
         try{
 
-//            if(PolyUtil.isLocationOnPath(point, testLocation, true, 25));{
-//
-//                mp.start();
-//            }
+            if(PolyUtil.isLocationOnPath(point, stou, true, 50)){
 
+                if(speed > 60.00){
+
+                    mp.start();
+                    setViolationUser("Sirawan to Ulas Crossing Zone", l, lg, "60");
+                    setViolationGeneral("Sirawan to Ulas Crossing Zone", l, lg, "60");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, ctou, true, 50)){
+
+                if(speed > 60.00){
+
+                    mp.start();
+                    setViolationUser("Calinan to Ulas Crossing Zone", l, lg, "60");
+                    setViolationGeneral("Sirawan to Ulas Crossing Zone", l, lg, "60");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnEdge(point, testlocation, true, 25)){
+
+                if(speed >= 0.00){
+
+                    mp.start();
+                    setViolationUser("Testing Zone", l, lg, "30");
+                    setViolationGeneral("Testing Zone", l, lg, "30");
+                }
+            }
         }
 
         catch(Exception e){
 
             Toast.makeText(getApplicationContext(), "Can't Calculate Locations", Toast.LENGTH_LONG).show();
         }
-
-
     }
 
     private void setVal(Location location){
@@ -1622,7 +1769,6 @@ public class Services extends Service {
                 distance = distance + (lStart.distanceTo(lEnd) / 1000.00);
                 newspeed = (new DecimalFormat("#.###").format(speed));
                 newdistance = (new DecimalFormat("#.###").format(distance));
-
                 lStart = lEnd;
                 setValues(newspeed, oras, newdistance, stringaverage);
             }
@@ -1652,6 +1798,67 @@ public class Services extends Service {
         catch(Exception e){
 
             System.out.println("Services (setValues): "+e);
+        }
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private void setViolationUser(String address, String lt, String lg, String violation){
+
+        try{
+
+            fd2 = FirebaseDatabase.getInstance();
+            dr2 = fd2.getReference();
+            String[] parts = email.split("@");
+            SimpleDateFormat simpleDateFormat, simpleTimeFormat;
+            simpleDateFormat = new SimpleDateFormat(getString(R.string.datepattern));
+            simpleTimeFormat = new SimpleDateFormat(getString(R.string.timepattern));
+            String date = simpleDateFormat.format(new Date());
+            String time = simpleTimeFormat.format(new Date());
+
+            ViolationUser vu = new ViolationUser();
+            vu.setDate(date);
+            vu.setTime(time);
+            vu.setAddress("Violation occurred at: "+address);
+            vu.setGeoLocation(""+lt+" ,"+lg+"");
+            vu.setViolation("The speed recorded exceeded the maximum speed limit of "+violation+" kp/h.");
+
+            dr2.child("Users").child(parts[0]).child("Violations").child(""+date+"").child(""+time+"").setValue(vu);
+        }
+
+        catch(Exception e){
+
+            System.out.println("Services (setViolationUser): "+e);
+        }
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private void setViolationGeneral(String address, String lt, String lg, String violation){
+
+        try{
+
+            fd3 = FirebaseDatabase.getInstance();
+            dr3 = fd3.getReference();
+            SimpleDateFormat simpleDateFormat, simpleTimeFormat;
+            simpleDateFormat = new SimpleDateFormat(getString(R.string.datepattern));
+            simpleTimeFormat = new SimpleDateFormat(getString(R.string.timepattern));
+            String date = simpleDateFormat.format(new Date());
+            String time = simpleTimeFormat.format(new Date());
+
+            ViolationGeneral vu = new ViolationGeneral();
+            vu.setDriver(fullname);
+            vu.setPlate(platenumber);
+            vu.setDate(date);
+            vu.setTime(time);
+            vu.setAddress("Violation occurred at: "+address);
+            vu.setGeoLocation(""+lt+" ,"+lg+"");
+            vu.setViolation("The speed recorded exceeded the maximum speed limit of "+violation+" kp/h.");
+
+            dr3.child("Violations").child(""+date+"").child(""+time+"").setValue(vu);
+        }
+
+        catch(Exception e){
+
+            System.out.println("Services (setViolationGeneral): "+e);
         }
     }
 
@@ -1735,6 +1942,93 @@ public class Services extends Service {
 
             System.out.println("Services (getAverage): "+e);
         }
+    }
+
+    private void getName(){
+
+        try{
+
+            String[] parts = email.split("@");
+            DatabaseReference getname = FirebaseDatabase.getInstance().getReference().child("Users");
+            getname.child(parts[0]).child("fullname").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    if(dataSnapshot != null){
+
+                        String name = dataSnapshot.getValue(String.class);
+                        try{
+
+                            if(name!=null){
+
+                                fullname = name;
+                                getPlateNumber();
+
+                            }
+                            else{
+
+                                Log.d("Service(getName)", "No Name Retrieved.");
+                            }
+                        }
+                        catch(Exception e){
+
+                            Log.e("Service(getName)", e.getMessage(), e);
+                        }
+                    }
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+        catch(Exception e){
+
+            Log.e("Service(getName)", e.getMessage(), e);
+        }
+    }
+
+    private void getPlateNumber(){
+
+        try{
+
+            String[] parts = email.split("@");
+            DatabaseReference getuser = FirebaseDatabase.getInstance().getReference().child("Users").child(parts[0]);
+            getuser.child("platenumber").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    if(dataSnapshot != null){
+
+                        String plate = dataSnapshot.getValue(String.class);
+                        try{
+
+                            if(plate!=null){
+
+                                platenumber = plate;
+                            }
+                            else{
+
+                                Log.d("Service(getProfile)", "No Plate Number was retrieved");
+                            }
+                        }
+                        catch(Exception e){
+
+                            Log.e("Service(getProfile)", e.getMessage(), e);
+                        }
+                    }
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+        catch(Exception e){
+
+            Log.e("Service(getProfile)", e.getMessage(), e);
+        }
+
     }
 
     public void showNotification(Context context) {

@@ -84,15 +84,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         handler.postDelayed(r = () -> {
             handler.postDelayed(r, delay);
-            System.out.println("On MapFragment Handler of SetCamera");
-//            setCamera(lat, lng, mTitle);
+            setCamera(lat, lng, mTitle);
 
         }, delay);
 
         h.postDelayed(r1 = () -> {
 
             h.postDelayed(r1, delay);
-            System.out.println("On MapFragment Handler of getspeed");
             getspeed();
 
         }, delay);
@@ -218,44 +216,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         try{
 
             mMap = googleMap;
-//            addPolyStoU();
-//            addPolyCtoU();
-//            addPolyLtoP();
-//            addPolyCPtoMC();
-//            addPolyUtoB();
-//            addPolyUtoGB();
-//            addPolyPtoJPL();
-//            addPolyMtoMCA();
-//            addPolyJPLtoB();
-//            addPolyEtoMA();
-//            addPolyCPLtoCA();
-//            addPolyJPLaurel();
-//            addPolyDacudao();
-//            addPolyStaAna();
-//            addPolyLapuLapu();
-//            addPolyRCastillo();
-//            addPolyMedSchoolDr();
-//            addPolyBacaca();
-//            addPolyFTorres();
-//            addPolySandawa();
-//            addPolyTulipD();
-//            addPolyQtoGB();
-//            addPolyJPLtoA();
-//            addBMtoO();
-//            addPolyCBangoy();
-//            addPolyPontoCB();
-//            addPolyClaveria();
-//            addPolyRoxas();
-//            addPolyTionko();
-//            addPolyMabini();
-//            addPolyEJtoR();
-//            addPolyBtoCir();
-//            addPolyAPtoM();
-//            addPolyJPalmaGil();
-//            addPolyBonifacio();
-//            addPolyRizal();
-//            addPolySanPedro();
-//            addPolyRMagsaysay();
+
         }
 
         catch(Exception e){
@@ -1877,13 +1838,165 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mMap.addPolyline(options);
     }
 
+    public void addPolyFrSelga(){
+
+        List<LatLng> selga = new ArrayList<LatLng>();
+
+        selga.add(new LatLng(7.077732089808884, 125.59503493674178));
+        selga.add(new LatLng(7.077527027751292, 125.59515715013463));
+        selga.add(new LatLng(7.077209334595789, 125.5954204584088));
+        selga.add(new LatLng(7.0769579261380295, 125.59567263783191));
+        selga.add(new LatLng(7.0766999088377425, 125.59587004780853));
+        selga.add(new LatLng(7.0764104405803785, 125.5960799306587));
+        selga.add(new LatLng(7.076383822800746, 125.59611949324005));
+        selga.add(new LatLng(7.076371844799412, 125.59617984294043));
+        selga.add(new LatLng(7.076531465355877, 125.59706453595109));
+        selga.add(new LatLng(7.076536788909514, 125.59719462308838));
+        selga.add(new LatLng(7.076521483690005, 125.59730727586803));
+        selga.add(new LatLng(7.076265545042872, 125.59801343589194));
+        selga.add(new LatLng(7.075860113750422, 125.59871114733335));
+        selga.add(new LatLng(7.075438947044602, 125.59934264881235));
+        selga.add(new LatLng(7.07527724366683, 125.5995545433228));
+        selga.add(new LatLng(7.075142945036807, 125.59966952783421));
+        selga.add(new LatLng(7.074418122017077, 125.60011133294472));
+        selga.add(new LatLng(7.073984634124014, 125.60031969754087));
+        selga.add(new LatLng(7.073900641613697, 125.600354798219));
+        selga.add(new LatLng(7.073535861503172, 125.60053210404426));
+        selga.add(new LatLng(7.073073746159051, 125.6006979706846));
+        selga.add(new LatLng(7.07284131671922, 125.60072231384844));
+        selga.add(new LatLng(7.072613256017293, 125.60071292856908));
+        selga.add(new LatLng(7.072314013697219, 125.60064816248212));
+        selga.add(new LatLng(7.071547081339508, 125.60039704097332));
+        selga.add(new LatLng(7.071177370683372, 125.60027230315296));
+        selga.add(new LatLng(7.070971497252158, 125.60024427522794));
+        selga.add(new LatLng(7.070375976707797, 125.60024566793822));
+        selga.add(new LatLng(7.07025382094129, 125.60028217266905));
+        selga.add(new LatLng(7.070135370230844, 125.60035660396615));
+        selga.add(new LatLng(7.069801160980437, 125.6007759266623));
+        selga.add(new LatLng(7.069174212223042, 125.60176515587474));
+        selga.add(new LatLng(7.069143758811559, 125.60180657501756));
+        selga.add(new LatLng(7.068549953111815, 125.60247926082194));
+        selga.add(new LatLng(7.068312820259605, 125.60273774001924));
+
+        PolylineOptions options = new PolylineOptions().width(32).color(Color.GREEN).geodesic(true);
+        options.addAll(selga);
+        mMap.addPolyline(options);
+    }
+
+    public void addPolyLJtoApo(){
+
+        List<LatLng> ljtoapo = new ArrayList<LatLng>();
+
+        ljtoapo.add(new LatLng(7.075588004450959, 125.60332939054607));
+        ljtoapo.add(new LatLng(7.075172309421431, 125.60364348531186));
+        ljtoapo.add(new LatLng(7.0746050249665355, 125.60412995695258));
+        ljtoapo.add(new LatLng(7.074329566164634, 125.60436716316298));
+        ljtoapo.add(new LatLng(7.074031878215309, 125.60460057203173));
+        ljtoapo.add(new LatLng(7.073630575364372, 125.60492828545938));
+        ljtoapo.add(new LatLng(7.073217438691252, 125.60526232186164));
+        ljtoapo.add(new LatLng(7.072623454518778, 125.6051915015152));
+        ljtoapo.add(new LatLng(7.071898680581672, 125.6051082051121));
+        ljtoapo.add(new LatLng(7.0718401208922, 125.60509345296313));
+        ljtoapo.add(new LatLng(7.0717155306788495, 125.60507846223705));
+        ljtoapo.add(new LatLng(7.071632643502668, 125.60506845793188));
+        ljtoapo.add(new LatLng(7.07126385812682, 125.6050194081005));
+        ljtoapo.add(new LatLng(7.070575437991146, 125.6049238911658));
+        ljtoapo.add(new LatLng(7.070095835759404, 125.60487884809628));
+
+        PolylineOptions options = new PolylineOptions().width(32).color(Color.GREEN).geodesic(true);
+        options.addAll(ljtoapo);
+        mMap.addPolyline(options);
+    }
+
+    public void addPolyGeneralMalvar(){
+
+        List<LatLng> generalmalvar = new ArrayList<LatLng>();
+
+        generalmalvar.add(new LatLng(7.073068579229539, 125.6007184839911));
+        generalmalvar.add(new LatLng(7.072922142844392, 125.60130431438182));
+        generalmalvar.add(new LatLng(7.072854932437573, 125.60150078619877));
+        generalmalvar.add(new LatLng(7.07261270871673, 125.60191585804063));
+        generalmalvar.add(new LatLng(7.072273488028672, 125.60238134527151));
+        generalmalvar.add(new LatLng(7.071964718917693, 125.60283061528406));
+        generalmalvar.add(new LatLng(7.070895675866237, 125.60433558473609));
+        generalmalvar.add(new LatLng(7.070515370243936, 125.60490225166572));
+
+        PolylineOptions options = new PolylineOptions().width(32).color(Color.GREEN).geodesic(true);
+        options.addAll(generalmalvar);
+        mMap.addPolyline(options);
+    }
+
+    public void addPolySanPedroExt(){
+
+        List<LatLng> sanpedroext = new ArrayList<LatLng>();
+
+        sanpedroext.add(new LatLng(7.07228781578691, 125.60066371681698));
+        sanpedroext.add(new LatLng(7.071343266598697, 125.60140732197311));
+        sanpedroext.add(new LatLng(7.070917705891625, 125.60170203183361));
+        sanpedroext.add(new LatLng(7.070472475179667, 125.60202482949491));
+        sanpedroext.add(new LatLng(7.069782024313059, 125.6025054945468));
+        sanpedroext.add(new LatLng(7.069279415169537, 125.60308146881744));
+        sanpedroext.add(new LatLng(7.068947386929593, 125.60346480325978));
+
+        PolylineOptions options = new PolylineOptions().width(32).color(Color.GREEN).geodesic(true);
+        options.addAll(sanpedroext);
+        mMap.addPolyline(options);
+    }
+
+    public void addPolyJCamusExt(){
+
+        List<LatLng> camusext = new ArrayList<LatLng>();
+
+        camusext.add(new LatLng(7.077266840705978, 125.60372597825652));
+        camusext.add(new LatLng(7.076939318998415, 125.60405499650761));
+        camusext.add(new LatLng(7.0764993658464475, 125.604404411648));
+        camusext.add(new LatLng(7.0760921137196355, 125.60474505219359));
+        camusext.add(new LatLng(7.075645599945751, 125.60511854980163));
+        camusext.add(new LatLng(7.074940877368486, 125.60570978758942));
+        camusext.add(new LatLng(7.074550634053723, 125.60603295068358));
+        camusext.add(new LatLng(7.074139350038844, 125.60636640674552));
+        camusext.add(new LatLng(7.073740410093836, 125.60669307273105));
+        camusext.add(new LatLng(7.073556996057154, 125.60681958289676));
+        camusext.add(new LatLng(7.07336639498186, 125.60694845575597));
+        camusext.add(new LatLng(7.073318482661496, 125.60696656066608));
+        camusext.add(new LatLng(7.0722681752812635, 125.60706045376338));
+        camusext.add(new LatLng(7.07224409506361, 125.60706432944629));
+        camusext.add(new LatLng(7.071937537593171, 125.6070993443904));
+
+        PolylineOptions options = new PolylineOptions().width(32).color(Color.GREEN).geodesic(true);
+        options.addAll(camusext);
+        mMap.addPolyline(options);
+    }
+
+    public void addPolyLoyola(){
+
+        List<LatLng> loyola = new ArrayList<LatLng>();
+
+        loyola.add(new LatLng(7.0880647074225935, 125.62030791483691));
+        loyola.add(new LatLng(7.087716419137281, 125.61991254790162));
+        loyola.add(new LatLng(7.087563566808061, 125.61971976253773));
+        loyola.add(new LatLng(7.087085061787737, 125.61913313944324));
+        loyola.add(new LatLng(7.086036288220177, 125.61790542074186));
+        loyola.add(new LatLng(7.08562438649419, 125.61739714213115));
+        loyola.add(new LatLng(7.084056898042247, 125.61548488515466));
+        loyola.add(new LatLng(7.083619702649313, 125.614918615268));
+        loyola.add(new LatLng(7.083080217402028, 125.61427540641004));
+        loyola.add(new LatLng(7.083067574137759, 125.61423316161589));
+        loyola.add(new LatLng(7.083031004821841, 125.61407409120041));
+        loyola.add(new LatLng(7.082951818057398, 125.61334587145481));
+        loyola.add(new LatLng(7.082887641749852, 125.61282049466652));
+        loyola.add(new LatLng(7.0828547042729255, 125.61252316172211));
+
+        PolylineOptions options = new PolylineOptions().width(32).color(Color.GREEN).geodesic(true);
+        options.addAll(loyola);
+        mMap.addPolyline(options);
+    }
+
     public void setCamera (Double lat, Double lng, String title){
 
         try {
 
             LatLng loc = new LatLng(lat, lng);
-            System.out.println("Set Camera Current Location: "+lat+" ,"+lng+"");
-            System.out.println("Location Value: "+loc);
             mMap.clear();
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 16));
             marker1 = mMap.addMarker(new MarkerOptions().position(loc).title(title).icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_taxi)));
@@ -1892,6 +2005,54 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
             Log.e("onMoveCamera", e.getMessage(), e);
         }
+    }
+
+    public void addPolyLines(){
+
+        addPolyStoU();
+        addPolyCtoU();
+        addPolyLtoP();
+        addPolyCPtoMC();
+        addPolyUtoB();
+        addPolyUtoGB();
+        addPolyPtoJPL();
+        addPolyMtoMCA();
+        addPolyJPLtoB();
+        addPolyEtoMA();
+        addPolyCPLtoCA();
+        addPolyJPLaurel();
+        addPolyDacudao();
+        addPolyStaAna();
+        addPolyLapuLapu();
+        addPolyRCastillo();
+        addPolyMedSchoolDr();
+        addPolyBacaca();
+        addPolyFTorres();
+        addPolySandawa();
+        addPolyTulipD();
+        addPolyQtoGB();
+        addPolyJPLtoA();
+        addBMtoO();
+        addPolyCBangoy();
+        addPolyPontoCB();
+        addPolyClaveria();
+        addPolyRoxas();
+        addPolyTionko();
+        addPolyMabini();
+        addPolyEJtoR();
+        addPolyBtoCir();
+        addPolyAPtoM();
+        addPolyJPalmaGil();
+        addPolyBonifacio();
+        addPolyRizal();
+        addPolySanPedro();
+        addPolyRMagsaysay();
+        addPolyFrSelga();
+        addPolyLJtoApo();
+        addPolyGeneralMalvar();
+        addPolySanPedroExt();
+        addPolyJCamusExt();
+        addPolyLoyola();
     }
 
     private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {

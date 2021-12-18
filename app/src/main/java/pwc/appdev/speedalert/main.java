@@ -47,7 +47,7 @@ public class main extends AppCompatActivity
 
     private FirebaseAuth auth;
     private String useremail = " ";
-    private String name = " ";
+    public String name = " ";
     boolean isConnected = true;
     private boolean monitoringConnectivity = false;
     private CircleImageView imageViewNav;
