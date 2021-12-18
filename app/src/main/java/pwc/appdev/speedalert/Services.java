@@ -45,6 +45,7 @@ public class Services extends Service {
     private LocationManager mLocationManager = null;
     Location locations;
     Location mCurrentLocation, lStart, lEnd;
+    LocationListener mLocationListeners = new LocationListener((LocationManager.GPS_PROVIDER));
     static double distance = 0;
     double speed, oldspeed = 0.00;
     private FirebaseAuth auth;
@@ -127,7 +128,7 @@ public class Services extends Service {
                     try {
                         mLocationManager.requestLocationUpdates(
                                 LocationManager.GPS_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
-                                mLocationListeners[0]);
+                                mLocationListeners);
                     } catch (java.lang.SecurityException ex) {
                         Log.i(TAG, "Failed to request Location Update, ignore", ex);
                     } catch (IllegalArgumentException ex) {
@@ -658,7 +659,7 @@ public class Services extends Service {
         etoma.add(new LatLng(7.053300447087304, 125.59846405231835));
         etoma.add(new LatLng(7.053809483490739, 125.59870957109902));
 
-        // J.P Laurel Ave. to Bolton Bridge (30 kph zone - Tolerance 20 M)
+        // J.P Laurel Ave. to Bolton Bridge (30 kph zone - Tolerance 40 M)
 
         jpltob.add(new LatLng(7.103806431689361, 125.64338946958817));
         jpltob.add(new LatLng(7.1037251309272404, 125.64314059338983));
@@ -730,7 +731,7 @@ public class Services extends Service {
         jpltob.add(new LatLng(7.0578252107034585, 125.60398088380353));
         jpltob.add(new LatLng(7.057729549659219, 125.60325380152825));
 
-        // C.P Garcia Highway to Corner Angliongto St. (30 kph zone - Tolerance 15 M)
+        // C.P Garcia Highway to Corner Angliongto St. (30 kph zone - Tolerance 20 M)
 
         cpltoca.add(new LatLng(7.1183171530795635, 125.62688675259376));
         cpltoca.add(new LatLng(7.118062224521078, 125.62695968008113));
@@ -1069,7 +1070,7 @@ public class Services extends Service {
         bacacacir.add(new LatLng(7.076529944881063, 125.59807576835132));
         bacacacir.add(new LatLng(7.076272747188815, 125.59803193634204));
 
-        // Emilio Jacinto Ext. to Roxas Ave cor. Quezon Blvd (30 kph zone - Tolerance 15 M)
+        // Emilio Jacinto Ext. to cor. Quirino Ave. (30 kph zone - Tolerance 15 M)
 
         ejtor.add(new LatLng(7.082099862292275, 125.60498885773289));
         ejtor.add(new LatLng(7.081811432312929, 125.60545071683319));
@@ -1207,7 +1208,7 @@ public class Services extends Service {
         cbangoy.add(new LatLng(7.0738978463272, 125.61103667458661));
         cbangoy.add(new LatLng(7.073596398240217, 125.61104874452727));
 
-        // Buhangin Milan to Overpass (30 kph zone - Tolerance 15 M)
+        // Buhangin Milan to J.P. Laurel Overpass (30 kph zone - Tolerance 15 M)
 
         bmtoo.add(new LatLng(7.108590816178421, 125.61334217387638));
         bmtoo.add(new LatLng(7.106606145388121, 125.61371184062965));
@@ -1645,11 +1646,6 @@ public class Services extends Service {
         }
     }
 
-    LocationListener[] mLocationListeners = new LocationListener[] {
-            new LocationListener((LocationManager.GPS_PROVIDER))
-    };
-
-
     private void initializeLocationManager() {
         Log.e(TAG, "initializeLocationManager");
         if (mLocationManager == null) {
@@ -1721,13 +1717,443 @@ public class Services extends Service {
 
                     mp.start();
                     setViolationUser("Calinan to Ulas Crossing Zone", l, lg, "60");
-                    setViolationGeneral("Sirawan to Ulas Crossing Zone", l, lg, "60");
+                    setViolationGeneral("Calinan to Ulas Crossing Zone", l, lg, "60");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, ltop, true, 50)){
+
+                if(speed > 60.00){
+
+                    mp.start();
+                    setViolationUser("Lasang to Panacan Zone", l, lg, "60");
+                    setViolationGeneral("Lasang to Panacan Zone", l, lg, "60");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, cptomca, true, 50)){
+
+                if(speed > 60.00){
+
+                    mp.start();
+                    setViolationUser("C.P Garcia Highway to McArthur Highway Zone", l, lg, "60");
+                    setViolationGeneral("C.P Garcia Highway to McArthur Highway Zone", l, lg, "60");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, utob, true, 30)){
+
+                if(speed > 40.00){
+
+                    mp.start();
+                    setViolationUser("Ulas to Bolton Bridge Zone", l, lg, "40");
+                    setViolationGeneral("Ulas to Bolton Bridge Zone", l, lg, "40");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, utogb, true, 30)){
+
+                if(speed > 40.00){
+
+                    mp.start();
+                    setViolationUser("Ulas to Generoso Bridge Zone", l, lg, "40");
+                    setViolationGeneral("Ulas to Generoso Bridge Zone", l, lg, "40");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, ptojpl, true, 30)){
+
+                if(speed > 40.00){
+
+                    mp.start();
+                    setViolationUser("Panacan Crossing to J.P Laurel Avenue Zone", l, lg, "40");
+                    setViolationGeneral("Panacan Crossing to J.P Laurel Avenue Zone", l, lg, "40");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, mtomca, true, 30)){
+
+                if(speed > 40.00){
+
+                    mp.start();
+                    setViolationUser("Maa Diversion Road to McArthur Highway Zone", l, lg, "40");
+                    setViolationGeneral("Maa Diversion Road to McArthur Highway Zone", l, lg, "40");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, etoma, true, 30)){
+
+                if(speed > 40.00){
+
+                    mp.start();
+                    setViolationUser("Ecoland Dr. to Matina Aplaya Rd. Zone", l, lg, "40");
+                    setViolationGeneral("Ecoland Dr. to Matina Aplaya Rd. Zone", l, lg, "40");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, etoma, true, 30)){
+
+                if(speed > 40.00){
+
+                    mp.start();
+                    setViolationUser("Ecoland Dr. to Matina Aplaya Rd. Zone", l, lg, "40");
+                    setViolationGeneral("Ecoland Dr. to Matina Aplaya Rd. Zone", l, lg, "40");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, jpltob, true, 40)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("J.P Laurel Ave. to Bolton Bridge Zone", l, lg, "30");
+                    setViolationGeneral("J.P Laurel Ave. to Bolton Bridge Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, cpltoca, true, 15)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("C.P Garcia Highway to Corner Angliongto St. Zone", l, lg, "30");
+                    setViolationGeneral("C.P Garcia Highway to Corner Angliongto St. Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, jplaurel, true, 15)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("J.P Laurel Ave. Zone", l, lg, "30");
+                    setViolationGeneral("J.P Laurel Ave. Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, jplaurel, true, 20)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("J.P Laurel Ave. Zone", l, lg, "30");
+                    setViolationGeneral("J.P Laurel Ave. Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, rcastillo, true, 20)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("R. Castillo St. Zone", l, lg, "30");
+                    setViolationGeneral("R. Castillo St. Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, dacudao, true, 30)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("Dacudao Ave. Zone", l, lg, "30");
+                    setViolationGeneral("Dacudao Ave. Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, lapulapu, true, 20)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("Lapu-lapu St. Zone", l, lg, "30");
+                    setViolationGeneral("Lapu-lapu St. Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, staana, true, 20)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("Sta. Ana Ave. Zone", l, lg, "30");
+                    setViolationGeneral("Sta. Ana Ave. Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, sanped, true, 15)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("San Pedro St. Zone", l, lg, "30");
+                    setViolationGeneral("San Pedro St. Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, rizal, true, 15)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("Rizal St. Zone", l, lg, "30");
+                    setViolationGeneral("Rizal St. Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, bonifacio, true, 15)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("Bonifacio St. Zone", l, lg, "30");
+                    setViolationGeneral("Bonifacio St. Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, jpalmagil, true, 15)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("J. Palma Gil St. Zone", l, lg, "30");
+                    setViolationGeneral("J. Palma Gil St. Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, apichon, true, 15)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("A. Pichon/Magallanes St. Zone", l, lg, "30");
+                    setViolationGeneral("A. Pichon/Magallanes St. Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, bacacacir, true, 15)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("C.P Garcia Highway - Bacaca to Circumferential Road Zone", l, lg, "30");
+                    setViolationGeneral("C.P Garcia Highway - Bacaca to Circumferential Road Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, ejtor, true, 15)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("Emilio Jacinto Ext. to cor. Quirino Ave. Zone", l, lg, "30");
+                    setViolationGeneral("Emilio Jacinto Ext. to cor. Quirino Ave. Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, mabini, true, 15)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("Mabini St. Zone", l, lg, "30");
+                    setViolationGeneral("Mabini St. Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, tionko, true, 15)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("Tionko Ave. Zone", l, lg, "30");
+                    setViolationGeneral("Tionko Ave. Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, roxas, true, 15)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("Roxas Ave. Zone", l, lg, "30");
+                    setViolationGeneral("Roxas Ave. Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, claveria, true, 15)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("Claveria St. Zone", l, lg, "30");
+                    setViolationGeneral("Claveria St. Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, cbtocsp, true, 15)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("Ponciano / C. Bangoy St. to Cor. San Pedro St. Zone", l, lg, "30");
+                    setViolationGeneral("Ponciano / C. Bangoy St. to Cor. San Pedro St. Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, cbangoy, true, 15)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("C. Bangoy St. Zone", l, lg, "30");
+                    setViolationGeneral("C. Bangoy St. Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, bmtoo, true, 20)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("Buhangin Milan to J.P. Laurel Overpass Zone", l, lg, "30");
+                    setViolationGeneral("Buhangin Milan to J.P. Laurel Overpass Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, jpltoa, true, 20)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("J.P. Laurel Overpass to Acacia Zone", l, lg, "30");
+                    setViolationGeneral("J.P. Laurel Overpass to Acacia Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, qtogb, true, 20)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("Quirino Ave. to Generoso Bridge Zone", l, lg, "30");
+                    setViolationGeneral("Quirino Ave. to Generoso Bridge Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, tulip, true, 15)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("Tulip Drive Zone", l, lg, "30");
+                    setViolationGeneral("Tulip Drive Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, sandawa, true, 15)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("Guillermo E. Torres (Sandawa) Zone", l, lg, "30");
+                    setViolationGeneral("Guillermo E. Torres (Sandawa) Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, ftorres, true, 15)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("F. Torres St. Zone", l, lg, "30");
+                    setViolationGeneral("F. Torres St. Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, bacaca, true, 15)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("Bacaca Road Zone", l, lg, "30");
+                    setViolationGeneral("Bacaca Road Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, medical, true, 15)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("Medical School Drive Zone", l, lg, "30");
+                    setViolationGeneral("Medical School Drive Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, selga, true, 15)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("Fr. Selga St. Zone", l, lg, "30");
+                    setViolationGeneral("Fr. Selga St. Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, ljtoapo, true, 15)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("Lopez Jaena St to Mt. Apo St. Zone", l, lg, "30");
+                    setViolationGeneral("Lopez Jaena St to Mt. Apo St. Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, generalmalvar, true, 15)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("General Malvar St. Zone", l, lg, "30");
+                    setViolationGeneral("General Malvar St.  Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, sanpedroext, true, 15)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("San Pedro Extension Zone", l, lg, "30");
+                    setViolationGeneral("San Pedro Extension Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, camusext, true, 15)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("J. Camus Extension Zone", l, lg, "30");
+                    setViolationGeneral("J. Camus Extension Zone", l, lg, "30");
+                }
+            }
+
+            else if(PolyUtil.isLocationOnPath(point, loyola, true, 15)){
+
+                if(speed > 30.00){
+
+                    mp.start();
+                    setViolationUser("Loyola St. Zone", l, lg, "30");
+                    setViolationGeneral("Loyola St. Zone", l, lg, "30");
                 }
             }
 
             else if(PolyUtil.isLocationOnEdge(point, testlocation, true, 25)){
 
-                if(speed >= 0.00){
+                if(speed >= 30.00){
 
                     mp.start();
                     setViolationUser("Testing Zone", l, lg, "30");
@@ -2081,7 +2507,7 @@ public class Services extends Service {
     @Override
     public void onDestroy() {
 
-        super.onDestroy();
+        mLocationManager.removeUpdates(mLocationListeners);
 
     }
 }
