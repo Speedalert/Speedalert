@@ -9,7 +9,6 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkRequest;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -68,16 +67,8 @@ public class login extends AppCompatActivity {
         mServiceIntent.setAction(Services.ACTION_STOP_FOREGROUND_SERVICE);
 
         if (isMyServiceRunning(services.getClass())) {
-            
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
 
-                startForegroundService(mServiceIntent);
-            }
-
-            else {
-
-                startService(mServiceIntent);
-            }
+            startForegroundService(mServiceIntent);
         }
 
         auth = FirebaseAuth.getInstance();

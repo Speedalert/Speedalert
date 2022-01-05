@@ -18,7 +18,6 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkRequest;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -68,16 +67,7 @@ public class main extends AppCompatActivity
 
         if (!isMyServiceRunning(services.getClass())) {
 
-
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-
-                startForegroundService(mServiceIntent);
-            }
-
-            else {
-
-                startService(mServiceIntent);
-            }
+            startForegroundService(mServiceIntent);
         }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
