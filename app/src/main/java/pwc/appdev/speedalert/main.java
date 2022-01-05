@@ -252,6 +252,7 @@ public class main extends AppCompatActivity
 
         setStatusActive();
         checkConnectivity();
+        getName();
         super.onResume();
 
     }

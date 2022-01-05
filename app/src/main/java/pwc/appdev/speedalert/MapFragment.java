@@ -101,7 +101,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         String[] parts = useremail.split("@");
         fd = FirebaseDatabase.getInstance();
         dr = fd.getReference();
-        dr.child("Users").child(parts[0]).child("Vehicle Data").child("speed").addListenerForSingleValueEvent(new ValueEventListener() {
+        dr.child("Users").child(parts[0]).child("speed").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -129,7 +129,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         String[] parts = useremail.split("@");
         fd = FirebaseDatabase.getInstance();
         dr = fd.getReference();
-        dr.child("Users").child(parts[0]).child("Vehicle Data").child("average").addListenerForSingleValueEvent(new ValueEventListener() {
+        dr.child("Users").child(parts[0]).child("average").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -158,7 +158,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         String[] parts = useremail.split("@");
         fd = FirebaseDatabase.getInstance();
         dr = fd.getReference();
-        dr.child("Users").child(parts[0]).child("Vehicle Data").child("distance").addListenerForSingleValueEvent(new ValueEventListener() {
+        dr.child("Users").child(parts[0]).child("distance").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -187,7 +187,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         String[] parts = useremail.split("@");
         fd = FirebaseDatabase.getInstance();
         dr = fd.getReference();
-        dr.child("Users").child(parts[0]).child("Vehicle Data").child("time").addListenerForSingleValueEvent(new ValueEventListener() {
+        dr.child("Users").child(parts[0]).child("time").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 

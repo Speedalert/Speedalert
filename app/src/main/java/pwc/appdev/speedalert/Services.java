@@ -33,7 +33,10 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import static java.util.Collections.singleton;
 
 public class Services extends Service {
@@ -2209,15 +2212,15 @@ public class Services extends Service {
 
         try{
 
-            Initial i = new Initial();
-            i.setSpeed(speed);
-            i.setTime(time);
-            i.setDistance(distance);
-            i.setAverage(average);
-            i.setLocation(""+lat1+" ,"+lng1+"");
+            Map<String, Object> updates = new HashMap<>();
+            updates.put("speed", speed);
+            updates.put("time", time);
+            updates.put("distance", distance);
+            updates.put("average", average);
+            updates.put("location", ""+lat1+" ,"+lng1+"");
 
             String[] parts = email.split("@");
-            dr.child("Users").child(parts[0]).child("Vehicle Data").setValue(i);
+            dr.child("Users").child(parts[0]).updateChildren(updates);
         }
 
         catch(Exception e){
@@ -2333,7 +2336,7 @@ public class Services extends Service {
 
             FirebaseDatabase f = FirebaseDatabase.getInstance();
             DatabaseReference d = f.getReference();
-            d.child("Users").child(parts[0]).child("Vehicle Data").child("average").addListenerForSingleValueEvent(new ValueEventListener() {
+            d.child("Users").child(parts[0]).child("average").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 

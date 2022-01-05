@@ -35,6 +35,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class login extends AppCompatActivity {
 
@@ -280,15 +282,15 @@ public class login extends AppCompatActivity {
 
         try{
 
-            Initial i = new Initial();
-            i.setSpeed("0.000");
-            i.setTime("0.0");
-            i.setDistance("0.000");
-            i.setAverage("0.000");
-            i.setLocation("0.0");
+            Map<String, Object> updates = new HashMap<>();
+            updates.put("speed", "0.000");
+            updates.put("time", "0.0");
+            updates.put("distance", "0.000");
+            updates.put("average", "0.000");
+            updates.put("location", "0.0");
 
             String[] parts = emails.split("@");
-            dr.child("Users").child(parts[0]).child("Vehicle Data").setValue(i);
+            dr.child("Users").child(parts[0]).updateChildren(updates);
             addLoginTime();
         }
 
