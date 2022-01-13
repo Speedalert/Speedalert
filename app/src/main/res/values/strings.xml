@@ -38,5 +38,6 @@
     <string name="zerospeed">0.000</string>
     <string name="datepattern">EEE, MMM dd, yyyy</string>
     <string name="timepattern">HH:mm:ss</string>
+    <string name="timestamp">EEE, MMM dd, yyyy HH:mm:ss aaa</string>
 
 </resources>

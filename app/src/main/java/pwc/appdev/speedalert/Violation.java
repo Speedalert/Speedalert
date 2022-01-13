@@ -1,17 +1,30 @@
 package pwc.appdev.speedalert;
 
-class ViolationUser {
+class Violation {
 
-    private String date, time, address, geolocation, violation;
+    private String driver, plate, date, time, zone, address, geolocation, violation;
 
-    public ViolationUser(){
+    public Violation(){
 
+        this.driver = " ";
+        this.plate = " ";
         this.address = " ";
+        this.zone = " ";
         this.geolocation = " ";
         this.time = " ";
         this.violation = " ";
         this.date = " ";
 
+    }
+
+    public void setDriver(String fdriver){ this.driver = fdriver; }
+    public String getDriver(){
+        return driver;
+    }
+
+    public void setPlate(String fplate){ this.plate = fplate; }
+    public String getPlate(){
+        return plate;
     }
 
     public void setDate(String fdate){ this.date = fdate; }
@@ -29,7 +42,12 @@ class ViolationUser {
         return address;
     }
 
-    public void setGeoLocation(String fgeolocation){ this.geolocation = fgeolocation; }
+    public void setZone(String fzone){ this.zone = fzone; }
+    public String getZone(){
+        return zone;
+    }
+
+    public void setGeoLocation(String flocation){ this.geolocation = flocation; }
     public String getGeoLocation(){
         return geolocation;
     }

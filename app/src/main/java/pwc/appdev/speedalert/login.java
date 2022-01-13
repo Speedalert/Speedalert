@@ -1,8 +1,11 @@
 package pwc.appdev.speedalert;
 
 import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.Network;
@@ -20,7 +23,15 @@ import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -61,7 +72,7 @@ public class login extends AppCompatActivity {
 
         if(!CheckGpsStatus()){
 
-            startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+            buildAlertMessageNoGps();
         }
 
         Services services = new Services(this);
@@ -169,6 +180,21 @@ public class login extends AppCompatActivity {
         boolean GpsStatus = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
         return GpsStatus;
+    }
+
+    private void buildAlertMessageNoGps() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Your GPS seems to be disabled, please enable it to proceed.")
+                .setCancelable(false)
+                .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+
+                        Intent i = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(i);
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
     }
 
     private void getEmail(String user){
@@ -326,7 +352,7 @@ public class login extends AppCompatActivity {
             fd2 = FirebaseDatabase.getInstance();
             dr2 = fd2.getReference();
             String[] parts = emails.split("@");
-            dr2.child("Users").child(parts[0]).child("User Status").setValue("Active");
+            dr2.child("Users").child(parts[0]).child("UserStatus").setValue("Active");
         }
 
         catch(Exception e){

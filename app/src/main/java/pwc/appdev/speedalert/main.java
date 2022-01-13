@@ -148,7 +148,7 @@ public class main extends AppCompatActivity
             fd1 = FirebaseDatabase.getInstance();
             dr1 = fd1.getReference();
             String[] parts = useremail.split("@");
-            dr1.child("Users").child(parts[0]).child("User Status").setValue("Active");
+            dr1.child("Users").child(parts[0]).child("UserStatus").setValue("Active");
         }
 
         catch(Exception e){
@@ -164,7 +164,7 @@ public class main extends AppCompatActivity
             fd2 = FirebaseDatabase.getInstance();
             dr2 = fd2.getReference();
             String[] parts = useremail.split("@");
-            dr2.child("Users").child(parts[0]).child("User Status").setValue("Inactive");
+            dr2.child("Users").child(parts[0]).child("UserStatus").setValue("Inactive");
         }
 
         catch(Exception e){

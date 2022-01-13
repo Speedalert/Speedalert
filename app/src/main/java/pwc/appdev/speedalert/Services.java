@@ -9,6 +9,8 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.media.MediaPlayer;
@@ -35,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static java.util.Collections.singleton;
@@ -1708,8 +1711,7 @@ public class Services extends Service {
                 if(speed > 60.00){
 
                     mp.start();
-                    setViolationUser("Sirawan to Ulas Crossing Zone", l, lg, "60");
-                    setViolationGeneral("Sirawan to Ulas Crossing Zone", l, lg, "60");
+                    setViolation("Sirawan to Ulas Crossing Zone", l, lg, "60");
                 }
             }
 
@@ -1718,8 +1720,7 @@ public class Services extends Service {
                 if(speed > 60.00){
 
                     mp.start();
-                    setViolationUser("Calinan to Ulas Crossing Zone", l, lg, "60");
-                    setViolationGeneral("Calinan to Ulas Crossing Zone", l, lg, "60");
+                    setViolation("Calinan to Ulas Crossing Zone", l, lg, "60");
                 }
             }
 
@@ -1728,8 +1729,7 @@ public class Services extends Service {
                 if(speed > 60.00){
 
                     mp.start();
-                    setViolationUser("Lasang to Panacan Zone", l, lg, "60");
-                    setViolationGeneral("Lasang to Panacan Zone", l, lg, "60");
+                    setViolation("Lasang to Panacan Zone", l, lg, "60");
                 }
             }
 
@@ -1738,8 +1738,7 @@ public class Services extends Service {
                 if(speed > 60.00){
 
                     mp.start();
-                    setViolationUser("C.P Garcia Highway to McArthur Highway Zone", l, lg, "60");
-                    setViolationGeneral("C.P Garcia Highway to McArthur Highway Zone", l, lg, "60");
+                    setViolation("C.P Garcia Highway to McArthur Highway Zone", l, lg, "60");
                 }
             }
 
@@ -1748,8 +1747,7 @@ public class Services extends Service {
                 if(speed > 40.00){
 
                     mp.start();
-                    setViolationUser("Ulas to Bolton Bridge Zone", l, lg, "40");
-                    setViolationGeneral("Ulas to Bolton Bridge Zone", l, lg, "40");
+                    setViolation("Ulas to Bolton Bridge Zone", l, lg, "40");
                 }
             }
 
@@ -1758,8 +1756,7 @@ public class Services extends Service {
                 if(speed > 40.00){
 
                     mp.start();
-                    setViolationUser("Ulas to Generoso Bridge Zone", l, lg, "40");
-                    setViolationGeneral("Ulas to Generoso Bridge Zone", l, lg, "40");
+                    setViolation("Ulas to Generoso Bridge Zone", l, lg, "40");
                 }
             }
 
@@ -1768,8 +1765,7 @@ public class Services extends Service {
                 if(speed > 40.00){
 
                     mp.start();
-                    setViolationUser("Panacan Crossing to J.P Laurel Avenue Zone", l, lg, "40");
-                    setViolationGeneral("Panacan Crossing to J.P Laurel Avenue Zone", l, lg, "40");
+                    setViolation("Panacan Crossing to J.P Laurel Avenue Zone", l, lg, "40");
                 }
             }
 
@@ -1778,8 +1774,7 @@ public class Services extends Service {
                 if(speed > 40.00){
 
                     mp.start();
-                    setViolationUser("Maa Diversion Road to McArthur Highway Zone", l, lg, "40");
-                    setViolationGeneral("Maa Diversion Road to McArthur Highway Zone", l, lg, "40");
+                    setViolation("Maa Diversion Road to McArthur Highway Zone", l, lg, "40");
                 }
             }
 
@@ -1788,8 +1783,7 @@ public class Services extends Service {
                 if(speed > 40.00){
 
                     mp.start();
-                    setViolationUser("Ecoland Dr. to Matina Aplaya Rd. Zone", l, lg, "40");
-                    setViolationGeneral("Ecoland Dr. to Matina Aplaya Rd. Zone", l, lg, "40");
+                    setViolation("Ecoland Dr. to Matina Aplaya Rd. Zone", l, lg, "40");
                 }
             }
 
@@ -1798,8 +1792,7 @@ public class Services extends Service {
                 if(speed > 40.00){
 
                     mp.start();
-                    setViolationUser("Ecoland Dr. to Matina Aplaya Rd. Zone", l, lg, "40");
-                    setViolationGeneral("Ecoland Dr. to Matina Aplaya Rd. Zone", l, lg, "40");
+                    setViolation("Ecoland Dr. to Matina Aplaya Rd. Zone", l, lg, "40");
                 }
             }
 
@@ -1808,8 +1801,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("J.P Laurel Ave. to Bolton Bridge Zone", l, lg, "30");
-                    setViolationGeneral("J.P Laurel Ave. to Bolton Bridge Zone", l, lg, "30");
+                    setViolation("J.P Laurel Ave. to Bolton Bridge Zone", l, lg, "30");
                 }
             }
 
@@ -1818,8 +1810,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("C.P Garcia Highway to Corner Angliongto St. Zone", l, lg, "30");
-                    setViolationGeneral("C.P Garcia Highway to Corner Angliongto St. Zone", l, lg, "30");
+                    setViolation("C.P Garcia Highway to Corner Angliongto St. Zone", l, lg, "30");
                 }
             }
 
@@ -1828,8 +1819,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("J.P Laurel Ave. Zone", l, lg, "30");
-                    setViolationGeneral("J.P Laurel Ave. Zone", l, lg, "30");
+                    setViolation("J.P Laurel Ave. Zone", l, lg, "30");
                 }
             }
 
@@ -1838,8 +1828,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("J.P Laurel Ave. Zone", l, lg, "30");
-                    setViolationGeneral("J.P Laurel Ave. Zone", l, lg, "30");
+                    setViolation("J.P Laurel Ave. Zone", l, lg, "30");
                 }
             }
 
@@ -1848,8 +1837,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("R. Castillo St. Zone", l, lg, "30");
-                    setViolationGeneral("R. Castillo St. Zone", l, lg, "30");
+                    setViolation("R. Castillo St. Zone", l, lg, "30");
                 }
             }
 
@@ -1858,8 +1846,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("Dacudao Ave. Zone", l, lg, "30");
-                    setViolationGeneral("Dacudao Ave. Zone", l, lg, "30");
+                    setViolation("Dacudao Ave. Zone", l, lg, "30");
                 }
             }
 
@@ -1868,8 +1855,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("Lapu-lapu St. Zone", l, lg, "30");
-                    setViolationGeneral("Lapu-lapu St. Zone", l, lg, "30");
+                    setViolation("Lapu-lapu St. Zone", l, lg, "30");
                 }
             }
 
@@ -1878,8 +1864,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("Sta. Ana Ave. Zone", l, lg, "30");
-                    setViolationGeneral("Sta. Ana Ave. Zone", l, lg, "30");
+                    setViolation("Sta. Ana Ave. Zone", l, lg, "30");
                 }
             }
 
@@ -1888,8 +1873,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("San Pedro St. Zone", l, lg, "30");
-                    setViolationGeneral("San Pedro St. Zone", l, lg, "30");
+                    setViolation("San Pedro St. Zone", l, lg, "30");
                 }
             }
 
@@ -1898,8 +1882,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("Rizal St. Zone", l, lg, "30");
-                    setViolationGeneral("Rizal St. Zone", l, lg, "30");
+                    setViolation("Rizal St. Zone", l, lg, "30");
                 }
             }
 
@@ -1908,8 +1891,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("Bonifacio St. Zone", l, lg, "30");
-                    setViolationGeneral("Bonifacio St. Zone", l, lg, "30");
+                    setViolation("Bonifacio St. Zone", l, lg, "30");
                 }
             }
 
@@ -1918,8 +1900,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("J. Palma Gil St. Zone", l, lg, "30");
-                    setViolationGeneral("J. Palma Gil St. Zone", l, lg, "30");
+                    setViolation("J. Palma Gil St. Zone", l, lg, "30");
                 }
             }
 
@@ -1928,8 +1909,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("A. Pichon/Magallanes St. Zone", l, lg, "30");
-                    setViolationGeneral("A. Pichon/Magallanes St. Zone", l, lg, "30");
+                    setViolation("A. Pichon/Magallanes St. Zone", l, lg, "30");
                 }
             }
 
@@ -1938,8 +1918,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("C.P Garcia Highway - Bacaca to Circumferential Road Zone", l, lg, "30");
-                    setViolationGeneral("C.P Garcia Highway - Bacaca to Circumferential Road Zone", l, lg, "30");
+                    setViolation("C.P Garcia Highway - Bacaca to Circumferential Road Zone", l, lg, "30");
                 }
             }
 
@@ -1948,8 +1927,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("Emilio Jacinto Ext. to cor. Quirino Ave. Zone", l, lg, "30");
-                    setViolationGeneral("Emilio Jacinto Ext. to cor. Quirino Ave. Zone", l, lg, "30");
+                    setViolation("Emilio Jacinto Ext. to cor. Quirino Ave. Zone", l, lg, "30");
                 }
             }
 
@@ -1958,8 +1936,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("Mabini St. Zone", l, lg, "30");
-                    setViolationGeneral("Mabini St. Zone", l, lg, "30");
+                    setViolation("Mabini St. Zone", l, lg, "30");
                 }
             }
 
@@ -1968,8 +1945,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("Tionko Ave. Zone", l, lg, "30");
-                    setViolationGeneral("Tionko Ave. Zone", l, lg, "30");
+                    setViolation("Tionko Ave. Zone", l, lg, "30");
                 }
             }
 
@@ -1978,8 +1954,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("Roxas Ave. Zone", l, lg, "30");
-                    setViolationGeneral("Roxas Ave. Zone", l, lg, "30");
+                    setViolation("Roxas Ave. Zone", l, lg, "30");
                 }
             }
 
@@ -1988,8 +1963,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("Claveria St. Zone", l, lg, "30");
-                    setViolationGeneral("Claveria St. Zone", l, lg, "30");
+                    setViolation("Claveria St. Zone", l, lg, "30");
                 }
             }
 
@@ -1998,8 +1972,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("Ponciano / C. Bangoy St. to Cor. San Pedro St. Zone", l, lg, "30");
-                    setViolationGeneral("Ponciano / C. Bangoy St. to Cor. San Pedro St. Zone", l, lg, "30");
+                    setViolation("Ponciano / C. Bangoy St. to Cor. San Pedro St. Zone", l, lg, "30");
                 }
             }
 
@@ -2008,8 +1981,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("C. Bangoy St. Zone", l, lg, "30");
-                    setViolationGeneral("C. Bangoy St. Zone", l, lg, "30");
+                    setViolation("C. Bangoy St. Zone", l, lg, "30");
                 }
             }
 
@@ -2018,8 +1990,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("Buhangin Milan to J.P. Laurel Overpass Zone", l, lg, "30");
-                    setViolationGeneral("Buhangin Milan to J.P. Laurel Overpass Zone", l, lg, "30");
+                    setViolation("Buhangin Milan to J.P. Laurel Overpass Zone", l, lg, "30");
                 }
             }
 
@@ -2028,8 +1999,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("J.P. Laurel Overpass to Acacia Zone", l, lg, "30");
-                    setViolationGeneral("J.P. Laurel Overpass to Acacia Zone", l, lg, "30");
+                    setViolation("J.P. Laurel Overpass to Acacia Zone", l, lg, "30");
                 }
             }
 
@@ -2038,8 +2008,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("Quirino Ave. to Generoso Bridge Zone", l, lg, "30");
-                    setViolationGeneral("Quirino Ave. to Generoso Bridge Zone", l, lg, "30");
+                    setViolation("Quirino Ave. to Generoso Bridge Zone", l, lg, "30");
                 }
             }
 
@@ -2048,8 +2017,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("Tulip Drive Zone", l, lg, "30");
-                    setViolationGeneral("Tulip Drive Zone", l, lg, "30");
+                    setViolation("Tulip Drive Zone", l, lg, "30");
                 }
             }
 
@@ -2058,8 +2026,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("Guillermo E. Torres (Sandawa) Zone", l, lg, "30");
-                    setViolationGeneral("Guillermo E. Torres (Sandawa) Zone", l, lg, "30");
+                    setViolation("Guillermo E. Torres (Sandawa) Zone", l, lg, "30");
                 }
             }
 
@@ -2068,8 +2035,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("F. Torres St. Zone", l, lg, "30");
-                    setViolationGeneral("F. Torres St. Zone", l, lg, "30");
+                    setViolation("F. Torres St. Zone", l, lg, "30");
                 }
             }
 
@@ -2078,8 +2044,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("Bacaca Road Zone", l, lg, "30");
-                    setViolationGeneral("Bacaca Road Zone", l, lg, "30");
+                    setViolation("Bacaca Road Zone", l, lg, "30");
                 }
             }
 
@@ -2088,8 +2053,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("Medical School Drive Zone", l, lg, "30");
-                    setViolationGeneral("Medical School Drive Zone", l, lg, "30");
+                    setViolation("Medical School Drive Zone", l, lg, "30");
                 }
             }
 
@@ -2098,8 +2062,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("Fr. Selga St. Zone", l, lg, "30");
-                    setViolationGeneral("Fr. Selga St. Zone", l, lg, "30");
+                    setViolation("Fr. Selga St. Zone", l, lg, "30");
                 }
             }
 
@@ -2108,8 +2071,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("Lopez Jaena St to Mt. Apo St. Zone", l, lg, "30");
-                    setViolationGeneral("Lopez Jaena St to Mt. Apo St. Zone", l, lg, "30");
+                    setViolation("Lopez Jaena St to Mt. Apo St. Zone", l, lg, "30");
                 }
             }
 
@@ -2118,8 +2080,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("General Malvar St. Zone", l, lg, "30");
-                    setViolationGeneral("General Malvar St.  Zone", l, lg, "30");
+                    setViolation("General Malvar St.  Zone", l, lg, "30");
                 }
             }
 
@@ -2128,8 +2089,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("San Pedro Extension Zone", l, lg, "30");
-                    setViolationGeneral("San Pedro Extension Zone", l, lg, "30");
+                    setViolation("San Pedro Extension Zone", l, lg, "30");
                 }
             }
 
@@ -2138,8 +2098,7 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("J. Camus Extension Zone", l, lg, "30");
-                    setViolationGeneral("J. Camus Extension Zone", l, lg, "30");
+                    setViolation("J. Camus Extension Zone", l, lg, "30");
                 }
             }
 
@@ -2148,18 +2107,16 @@ public class Services extends Service {
                 if(speed > 30.00){
 
                     mp.start();
-                    setViolationUser("Loyola St. Zone", l, lg, "30");
-                    setViolationGeneral("Loyola St. Zone", l, lg, "30");
+                    setViolation("Loyola St. Zone", l, lg, "30");
                 }
             }
 
             else if(PolyUtil.isLocationOnEdge(point, testlocation, true, 25)){
 
-                if(speed >= 30.00){
+                if(speed >= 0.00){
 
                     mp.start();
-                    setViolationUser("Testing Zone", l, lg, "30");
-                    setViolationGeneral("Testing Zone", l, lg, "30");
+                    setViolation("Testing Zone", l, lg, "30");
                 }
             }
         }
@@ -2230,63 +2187,41 @@ public class Services extends Service {
     }
 
     @SuppressLint("SimpleDateFormat")
-    private void setViolationUser(String address, String lt, String lg, String violation){
-
-        try{
-
-            fd2 = FirebaseDatabase.getInstance();
-            dr2 = fd2.getReference();
-            String[] parts = email.split("@");
-            SimpleDateFormat simpleDateFormat, simpleTimeFormat;
-            simpleDateFormat = new SimpleDateFormat(getString(R.string.datepattern));
-            simpleTimeFormat = new SimpleDateFormat(getString(R.string.timepattern));
-            String date = simpleDateFormat.format(new Date());
-            String time = simpleTimeFormat.format(new Date());
-
-            ViolationUser vu = new ViolationUser();
-            vu.setDate(date);
-            vu.setTime(time);
-            vu.setAddress("Violation occurred at: "+address);
-            vu.setGeoLocation(""+lt+" ,"+lg+"");
-            vu.setViolation("The speed recorded exceeded the maximum speed limit of "+violation+" kp/h.");
-
-            dr2.child("Users").child(parts[0]).child("Violations").child(""+date+"").child(""+time+"").setValue(vu);
-        }
-
-        catch(Exception e){
-
-            System.out.println("Services (setViolationUser): "+e);
-        }
-    }
-
-    @SuppressLint("SimpleDateFormat")
-    private void setViolationGeneral(String address, String lt, String lg, String violation){
+    private void setViolation(String zone, String lt, String lg, String violation){
 
         try{
 
             fd3 = FirebaseDatabase.getInstance();
             dr3 = fd3.getReference();
-            SimpleDateFormat simpleDateFormat, simpleTimeFormat;
+            SimpleDateFormat simpleDateFormat, simpleTimeFormat, simpleTimeStampFormat;
             simpleDateFormat = new SimpleDateFormat(getString(R.string.datepattern));
             simpleTimeFormat = new SimpleDateFormat(getString(R.string.timepattern));
+            simpleTimeStampFormat = new SimpleDateFormat(getString(R.string.timestamp));
             String date = simpleDateFormat.format(new Date());
             String time = simpleTimeFormat.format(new Date());
+            String timestamp = simpleTimeStampFormat.format((new Date()));
+            double x, y;
+            x = Double.parseDouble(lt);
+            y = Double.parseDouble(lg);
+            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+            List<Address> addresses = geocoder.getFromLocation(x, y, 1);
 
-            ViolationGeneral vu = new ViolationGeneral();
+            Violation vu = new Violation();
             vu.setDriver(fullname);
             vu.setPlate(platenumber);
             vu.setDate(date);
             vu.setTime(time);
-            vu.setAddress("Violation occurred at: "+address);
+            vu.setAddress("Exact address of Violation: "+addresses.get(0).getAddressLine(0));
+            vu.setZone("Violation occurred at: "+zone);
             vu.setGeoLocation(""+lt+" ,"+lg+"");
             vu.setViolation("The speed recorded exceeded the maximum speed limit of "+violation+" kp/h.");
 
-            dr3.child("Violations").child(""+date+"").child(""+time+"").setValue(vu);
+            dr3.child("Violations").child(""+timestamp+"").setValue(vu);
         }
 
         catch(Exception e){
 
-            System.out.println("Services (setViolationGeneral): "+e);
+            System.out.println("Services (setViolation): "+e);
         }
     }
 
