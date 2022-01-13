@@ -46,7 +46,7 @@ public class ProfileFragment extends Fragment {
     private String mParam2;
     private CircleImageView circleImageView, circleImageViewedit;
     private StorageReference up;
-    private DatabaseReference ref, ref1, ref2, ref3;
+    private DatabaseReference ref, ref1, ref2;
     private FirebaseAuth auth;
     private String email = " ";
     private String contactno = " ";
@@ -55,7 +55,6 @@ public class ProfileFragment extends Fragment {
     private String urladd = " ";
     private String updatedname = " ";
     private String updatedcontactno = " ";
-    private String updatedemail = " ";
     private Uri mImageUri;
     private String[] parts = new String[2];
     private UploadTask uploadTask;
@@ -63,7 +62,7 @@ public class ProfileFragment extends Fragment {
     private ConstraintLayout inner, outer;
     private TextView tvfullname, tvcontactnumber, tvemail, tvplatenumber;
     private Button edit, save;
-    private TextInputEditText editfullname, editcontactnumner, editemail;
+    private TextInputEditText editfullname, editcontactnumner;
     private static final int PICK_IMAGE_REQUEST = 1;
 
     public ProfileFragment() {
@@ -120,12 +119,10 @@ public class ProfileFragment extends Fragment {
         save = view.findViewById(R.id.mapfragmentbuttonsave);
         editfullname = view.findViewById(R.id.mapfragment_fullnameedit);
         editcontactnumner = view.findViewById(R.id.mapfragment_contactnumberedit);
-        editemail = view.findViewById(R.id.mapfragment_emailedit);
         up = FirebaseStorage.getInstance().getReference("ProfilePictures");
         ref = FirebaseDatabase.getInstance().getReference("Users");
         ref1 = FirebaseDatabase.getInstance().getReference("Users");
         ref2 = FirebaseDatabase.getInstance().getReference("Users");
-        ref3 = FirebaseDatabase.getInstance().getReference("Users");
 
         getName();
 
@@ -135,7 +132,6 @@ public class ProfileFragment extends Fragment {
             inner.setVisibility(View.VISIBLE);
             editfullname.setText(fullname);
             editcontactnumner.setText(contactno);
-            editemail.setText(email);
             getUrl1();
 
         });
@@ -162,9 +158,7 @@ public class ProfileFragment extends Fragment {
                     updatedcontactno = editcontactnumner.getText().toString();
                     setContactno(updatedcontactno);
                     tvcontactnumber.setText(updatedcontactno);
-                    updatedemail = editemail.getText().toString();
-                    setEmail(updatedemail);
-                    tvemail.setText(updatedemail);
+                    tvemail.setText(email);
                     getUrl();
                     inner.setVisibility(View.GONE);
                     outer.setVisibility(View.VISIBLE);
@@ -216,19 +210,6 @@ public class ProfileFragment extends Fragment {
         catch(Exception e){
 
             Log.e("SetUserFContact", e.getMessage(), e);
-        }
-    }
-
-    private void setEmail(String newemail){
-
-        try{
-
-            ref3.child(parts[0]).child("emailaddress").setValue(newemail);
-        }
-
-        catch(Exception e){
-
-            Log.e("SetUserFEmail", e.getMessage(), e);
         }
     }
 
