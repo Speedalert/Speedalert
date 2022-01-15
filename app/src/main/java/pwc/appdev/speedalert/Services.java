@@ -39,7 +39,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 
+import static java.lang.Math.toIntExact;
 import static java.util.Collections.singleton;
 
 public class Services extends Service {
@@ -54,12 +56,14 @@ public class Services extends Service {
     static double distance = 0;
     double speed, oldspeed = 0.00;
     private FirebaseAuth auth;
-    private String email, fullname, platenumber;
+    private String email, fullname, platenumber, violationid;
+    private int rd;
+    private Random random = new Random();
     public static String oras, newspeed, newdistance, newaverage;
     public static String stringaverage = "0.000";
     Double lat1, lat2, lng1, lng2;
-    FirebaseDatabase fd, fd1, fd2, fd3;
-    DatabaseReference dr, dr1, dr2, dr3;
+    FirebaseDatabase fd, fd1, fd2, fd3, fd4;
+    DatabaseReference dr, dr1, dr2, dr3, dr4;
     private long sTime, min;
     public static final String ACTION_START_FOREGROUND_SERVICE = "ACTION_START_FOREGROUND_SERVICE";
     public static final String ACTION_STOP_FOREGROUND_SERVICE = "ACTION_STOP_FOREGROUND_SERVICE";
@@ -2113,7 +2117,7 @@ public class Services extends Service {
 
             else if(PolyUtil.isLocationOnEdge(point, testlocation, true, 25)){
 
-                if(speed >= 30.00){
+                if(speed >= 0.00){
 
                     mp.start();
                     setViolation("Testing Zone", l, lg, "30");
@@ -2194,35 +2198,47 @@ public class Services extends Service {
             fd3 = FirebaseDatabase.getInstance();
             dr3 = fd3.getReference();
             SimpleDateFormat simpleDateFormat, simpleTimeFormat, simpleTimeStampFormat;
-            simpleDateFormat = new SimpleDateFormat(getString(R.string.datepattern));
-            simpleTimeFormat = new SimpleDateFormat(getString(R.string.timepattern));
             simpleTimeStampFormat = new SimpleDateFormat(getString(R.string.timestamp));
-            String date = simpleDateFormat.format(new Date());
-            String time = simpleTimeFormat.format(new Date());
-            String timestamp = simpleTimeStampFormat.format((new Date()));
+            String timestamp = simpleTimeStampFormat.format(new Date());
             double x, y;
             x = Double.parseDouble(lt);
             y = Double.parseDouble(lg);
+            getViolationID();
             Geocoder geocoder = new Geocoder(this, Locale.getDefault());
             List<Address> addresses = geocoder.getFromLocation(x, y, 1);
 
             Violation vu = new Violation();
             vu.setDriver(fullname);
             vu.setPlate(platenumber);
-            vu.setDate(date);
-            vu.setTime(time);
-            vu.setAddress("Exact address of Violation: "+addresses.get(0).getAddressLine(0));
-            vu.setZone("Violation occurred at: "+zone);
+            vu.setDateTime(timestamp);
+            vu.setAddress(addresses.get(0).getAddressLine(0));
+            vu.setZone(zone);
             vu.setGeoLocation(""+lt+" ,"+lg+"");
             vu.setViolation("The speed recorded exceeded the maximum speed limit of "+violation+" kp/h.");
 
-            dr3.child("Violations").child(""+timestamp+"").setValue(vu);
+            dr3.child("Violations").child(""+violationid+"").setValue(vu);
         }
 
         catch(Exception e){
 
             System.out.println("Services (setViolation): "+e);
         }
+    }
+
+    private void genRandom(){
+
+        int pvrd = rd;
+        rd = random.nextInt(100000000);
+
+        while(rd == pvrd){
+
+            rd = random.nextInt(100000000);
+        }
+
+        fd4 = FirebaseDatabase.getInstance();
+        dr4 = fd4.getReference();
+        dr4.child("violationid").setValue(rd);
+        violationid = "VL"+rd;
     }
 
     private void getStartTime(){
@@ -2261,6 +2277,41 @@ public class Services extends Service {
         catch (Exception e){
 
             System.out.println("Services (getStartTime): "+e);
+        }
+    }
+
+    private void getViolationID(){
+
+
+        try{
+
+            fd2 = FirebaseDatabase.getInstance();
+            dr2 = fd2.getReference();
+            dr2.child("violationid").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    Long a = snapshot.getValue(Long.class);
+                    try{
+
+                        rd = toIntExact(a);
+                        genRandom();
+                    }
+                    catch(Exception e){
+
+                        System.out.println("Services (getViolationID: snapshot): "+e);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+        catch (Exception e){
+
+            System.out.println("Services (getViolationID): "+e);
         }
     }
 

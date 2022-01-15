@@ -36,8 +36,8 @@
     <string name="editprofile">Edit Profile</string>
     <string name="saveprofile">Save Changes</string>
     <string name="zerospeed">0.000</string>
-    <string name="datepattern">EEE, MMM dd, yyyy</string>
-    <string name="timepattern">HH:mm:ss</string>
-    <string name="timestamp">EEE, MMM dd, yyyy HH:mm:ss aaa</string>
+    <string name="datepattern">MM/dd/yyyy</string>
+    <string name="timepattern">HH:mm</string>
+    <string name="timestamp">MM/dd/yyyy HH:mm</string>
 
 </resources>
