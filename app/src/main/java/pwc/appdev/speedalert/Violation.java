@@ -2,10 +2,11 @@ package pwc.appdev.speedalert;
 
 class Violation {
 
-    private String driver, plate, datetime, zone, address, geolocation, violation;
+    private String id, driver, plate, datetime, zone, address, geolocation, violation;
 
     public Violation(){
 
+        this.id = "  ";
         this.driver = " ";
         this.plate = " ";
         this.address = " ";
@@ -14,6 +15,11 @@ class Violation {
         this.violation = " ";
         this.datetime = " ";
 
+    }
+
+    public void setViolationID(String fid){ this.id = fid; }
+    public String getViolationID(){
+        return id;
     }
 
     public void setDriver(String fdriver){ this.driver = fdriver; }

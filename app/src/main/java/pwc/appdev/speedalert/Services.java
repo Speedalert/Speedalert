@@ -2208,6 +2208,7 @@ public class Services extends Service {
             List<Address> addresses = geocoder.getFromLocation(x, y, 1);
 
             Violation vu = new Violation();
+            vu.setViolationID(violationid);
             vu.setDriver(fullname);
             vu.setPlate(platenumber);
             vu.setDateTime(timestamp);
@@ -2228,11 +2229,11 @@ public class Services extends Service {
     private void genRandom(){
 
         int pvrd = rd;
-        rd = random.nextInt(100000000);
+        rd = random.nextInt(1000000000);
 
         while(rd == pvrd){
 
-            rd = random.nextInt(100000000);
+            rd = random.nextInt(1000000000);
         }
 
         fd4 = FirebaseDatabase.getInstance();
