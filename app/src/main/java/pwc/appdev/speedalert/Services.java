@@ -1631,6 +1631,7 @@ public class Services extends Service {
             speed = location.getSpeed() * 18 / 5;
             lat1 = location.getLatitude();
             lng1 = location.getLongitude();
+            getViolationID();
             compare();
             setVal(location);
 
@@ -1681,6 +1682,7 @@ public class Services extends Service {
 
                         email = users.getEmail();
                         getName();
+                        getViolationID();
 
                     }
                     fd = FirebaseDatabase.getInstance();
@@ -2195,15 +2197,15 @@ public class Services extends Service {
 
         try{
 
+            System.out.println("On setting of Violation: "+zone);
             fd3 = FirebaseDatabase.getInstance();
             dr3 = fd3.getReference();
-            SimpleDateFormat simpleDateFormat, simpleTimeFormat, simpleTimeStampFormat;
-            simpleTimeStampFormat = new SimpleDateFormat(getString(R.string.timestamp));
+            SimpleDateFormat simpleTimeStampFormat;
+            simpleTimeStampFormat = new SimpleDateFormat(getString(R.string.timestamp), Locale.US);
             String timestamp = simpleTimeStampFormat.format(new Date());
             double x, y;
             x = Double.parseDouble(lt);
             y = Double.parseDouble(lg);
-            getViolationID();
             Geocoder geocoder = new Geocoder(this, Locale.getDefault());
             List<Address> addresses = geocoder.getFromLocation(x, y, 1);
 
