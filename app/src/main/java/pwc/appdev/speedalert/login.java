@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.Network;
@@ -23,15 +22,7 @@ import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-
-import com.google.android.gms.common.api.ResolvableApiException;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResponse;
-import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -44,9 +35,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class login extends AppCompatActivity {
@@ -332,9 +324,11 @@ public class login extends AppCompatActivity {
 
             fd1 = FirebaseDatabase.getInstance();
             dr1 = fd1.getReference();
-            Date currentTime = Calendar.getInstance().getTime();
+            SimpleDateFormat simpleTimeStampFormat;
+            simpleTimeStampFormat = new SimpleDateFormat(getString(R.string.timestamp), Locale.US);
+            String timestamp = simpleTimeStampFormat.format(new Date());
             String[] parts = emails.split("@");
-            dr1.child("Users").child(parts[0]).child("Last Login Date & Time").setValue(currentTime.toString());
+            dr1.child("Users").child(parts[0]).child("LastLoginDateTime").setValue(timestamp);
             setStatus();
 
         }

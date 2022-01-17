@@ -40,7 +40,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
-
 import static java.lang.Math.toIntExact;
 import static java.util.Collections.singleton;
 
@@ -2119,7 +2118,7 @@ public class Services extends Service {
 
             else if(PolyUtil.isLocationOnEdge(point, testlocation, true, 25)){
 
-                if(speed >= 0.00){
+                if(speed >= 30.00){
 
                     mp.start();
                     setViolation("Testing Zone", l, lg, "30");

@@ -34,8 +34,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class main extends AppCompatActivity
@@ -122,9 +126,11 @@ public class main extends AppCompatActivity
 
             fd = FirebaseDatabase.getInstance();
             dr = fd.getReference();
-            Date currentTime = Calendar.getInstance().getTime();
+            SimpleDateFormat simpleTimeStampFormat;
+            simpleTimeStampFormat = new SimpleDateFormat(getString(R.string.timestamp), Locale.US);
+            String timestamp = simpleTimeStampFormat.format(new Date());
             String[] parts = useremail.split("@");
-            dr.child("Users").child(parts[0]).child("Last Logout Date & Time").setValue(currentTime.toString());
+            dr.child("Users").child(parts[0]).child("LastLogoutDateTime").setValue(timestamp);
             auth.signOut();
             setStatusInActive();
             finish();
