@@ -4,7 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Conrad Francisco Jr/Desktop/Speedalert/app/src/main/res/layout/activity_main.xml" value="0.14492753623188406" />
+        <entry key="..\:/Users/Conrad Francisco Jr/Desktop/Speedalert/app/src/main/res/layout/content_mainmenu.xml" value="0.1096757852077001" />
         <entry key="..\:/Users/Conrad Francisco Jr/Desktop/Speedalert/app/src/main/res/layout/fragment_profile.xml" value="0.25" />
+        <entry key="..\:/Users/Conrad Francisco Jr/Desktop/Speedalert/app/src/main/res/layout/login.xml" value="0.25770020533880905" />
+        <entry key="..\:/Users/Conrad Francisco Jr/Desktop/Speedalert/app/src/main/res/layout/reset.xml" value="0.1096757852077001" />
+        <entry key="..\:/Users/Conrad Francisco Jr/Desktop/Speedalert/app/src/main/res/layout/signup.xml" value="0.1096757852077001" />
         <entry key="..\:/Users/Conrad Francisco Jr/Desktop/Speedalert/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.24166666666666667" />
       </map>
     </option>
