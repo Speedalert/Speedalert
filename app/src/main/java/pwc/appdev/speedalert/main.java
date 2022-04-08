@@ -34,12 +34,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class main extends AppCompatActivity
@@ -57,8 +54,8 @@ public class main extends AppCompatActivity
     private TextView fname,femail;
     private DrawerLayout drawer, mRoot;
     private String[] parts = new String[2];
-    FirebaseDatabase fd, fd1, fd2;
-    DatabaseReference dr, dr1, dr2;
+    FirebaseDatabase fd, fd1, fd2, fd3, fd4;
+    DatabaseReference dr, dr1, dr2, dr3, dr4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,7 +129,8 @@ public class main extends AppCompatActivity
             String[] parts = useremail.split("@");
             dr.child("Users").child(parts[0]).child("LastLogoutDateTime").setValue(timestamp);
             auth.signOut();
-            setStatusInActive();
+            setStatusInActiveLogout();
+            setRemarks();
             finish();
             Intent intent = new Intent(main.this, login.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -154,7 +152,7 @@ public class main extends AppCompatActivity
             fd1 = FirebaseDatabase.getInstance();
             dr1 = fd1.getReference();
             String[] parts = useremail.split("@");
-            dr1.child("Users").child(parts[0]).child("UserStatus").setValue("Active");
+            dr1.child("Users").child(parts[0]).child("UserStatus").setValue("User is now active.");
         }
 
         catch(Exception e){
@@ -170,12 +168,44 @@ public class main extends AppCompatActivity
             fd2 = FirebaseDatabase.getInstance();
             dr2 = fd2.getReference();
             String[] parts = useremail.split("@");
-            dr2.child("Users").child(parts[0]).child("UserStatus").setValue("Inactive");
+            dr2.child("Users").child(parts[0]).child("UserStatus").setValue("User is inactive.");
         }
 
         catch(Exception e){
 
             System.out.println("Main (setStatusInactive): "+e);
+        }
+    }
+
+    private void setStatusInActiveLogout() {
+
+        try{
+
+            fd4 = FirebaseDatabase.getInstance();
+            dr4 = fd4.getReference();
+            String[] parts = useremail.split("@");
+            dr4.child("Users").child(parts[0]).child("UserStatus").setValue("User is signed out.");
+        }
+
+        catch(Exception e){
+
+            System.out.println("Main (setStatusInactiveLogout): "+e);
+        }
+    }
+
+    private void setRemarks() {
+
+        try{
+
+            fd3 = FirebaseDatabase.getInstance();
+            dr3 = fd3.getReference();
+            String[] parts = useremail.split("@");
+            dr3.child("Users").child(parts[0]).child("Remarks").setValue("Vehicle is not moving.");
+        }
+
+        catch(Exception e){
+
+            System.out.println("Main (setRemarks): "+e);
         }
     }
 

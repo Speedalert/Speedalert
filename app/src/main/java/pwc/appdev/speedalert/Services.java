@@ -15,6 +15,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.util.Log;
@@ -49,20 +50,22 @@ public class Services extends Service {
     private static final int LOCATION_INTERVAL = 1000;
     private static final float LOCATION_DISTANCE = 0;
     private LocationManager mLocationManager = null;
-    Location locations;
+    Location locations, loc1;
     Location mCurrentLocation, lStart, lEnd;
     LocationListener mLocationListeners = new LocationListener((LocationManager.GPS_PROVIDER));
     static double distance = 0;
     double speed, oldspeed = 0.00;
     private FirebaseAuth auth;
+    public final Handler handler = new Handler();
+    Runnable r;
     private String email, fullname, platenumber, violationid;
     private int rd;
     private Random random = new Random();
     public static String oras, newspeed, newdistance, newaverage;
     public static String stringaverage = "0.000";
     Double lat1, lat2, lng1, lng2;
-    FirebaseDatabase fd, fd1, fd2, fd3, fd4;
-    DatabaseReference dr, dr1, dr2, dr3, dr4;
+    FirebaseDatabase fd, fd1, fd2, fd3, fd4, fd5;
+    DatabaseReference dr, dr1, dr2, dr3, dr4, dr5;
     private long sTime, min;
     public static final String ACTION_START_FOREGROUND_SERVICE = "ACTION_START_FOREGROUND_SERVICE";
     public static final String ACTION_STOP_FOREGROUND_SERVICE = "ACTION_STOP_FOREGROUND_SERVICE";
@@ -137,6 +140,10 @@ public class Services extends Service {
                         mLocationManager.requestLocationUpdates(
                                 LocationManager.GPS_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
                                 mLocationListeners);
+                        loc1 = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                        Log.e(TAG, "onGetLastKnownLocation: " + "Latitude: "+loc1.getLatitude()+"Latitude: "+loc1.getLongitude());
+                        lat2 = loc1.getLatitude();
+                        lng2 = loc1.getLongitude();
                     } catch (java.lang.SecurityException ex) {
                         Log.i(TAG, "Failed to request Location Update, ignore", ex);
                     } catch (IllegalArgumentException ex) {
@@ -1682,6 +1689,10 @@ public class Services extends Service {
                         email = users.getEmail();
                         getName();
                         getViolationID();
+                        handler.postDelayed(r = () -> {
+                            handler.postDelayed(r, 5000);
+                            running();
+                        }, 5000);
 
                     }
                     fd = FirebaseDatabase.getInstance();
@@ -2445,6 +2456,37 @@ public class Services extends Service {
             Log.e("Service(getProfile)", e.getMessage(), e);
         }
 
+    }
+
+    public void running(){
+
+        String[] parts = email.split("@");
+
+        try{
+
+            fd5 = FirebaseDatabase.getInstance();
+            dr5 = fd5.getReference();
+
+            double dlat = Math.toRadians(lat2 - lat1);
+            double dlng = Math.toRadians(lng2 - lng1);
+            double a = Math.sin(dlat/2) * Math.sin(dlat/2) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.sin(dlng/2) * Math.sin(dlng/2);
+            double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            double distance = 6371 * c * 1000;
+            if(distance > 0.001){
+
+                dr5.child("Users").child(parts[0]).child("Remarks").setValue("Vehicle is running.");
+                lat2 = lat1;
+                lng2 = lng1;
+            }
+            else{
+
+                dr5.child("Users").child(parts[0]).child("Remarks").setValue("Vehicle is not running.");
+            }
+        }
+        catch(Exception e){
+
+            Log.e("Service(running)", e.getMessage(), e);
+        }
     }
 
     public void showNotification(Context context) {

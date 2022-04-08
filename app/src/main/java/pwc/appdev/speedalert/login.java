@@ -346,7 +346,7 @@ public class login extends AppCompatActivity {
             fd2 = FirebaseDatabase.getInstance();
             dr2 = fd2.getReference();
             String[] parts = emails.split("@");
-            dr2.child("Users").child(parts[0]).child("UserStatus").setValue("Active");
+            dr2.child("Users").child(parts[0]).child("UserStatus").setValue("User is now active.");
         }
 
         catch(Exception e){
