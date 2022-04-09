@@ -50,23 +50,23 @@ public class Services extends Service {
     private static final int LOCATION_INTERVAL = 1000;
     private static final float LOCATION_DISTANCE = 0;
     private LocationManager mLocationManager = null;
-    Location locations, loc1;
+    Location locations;
     Location mCurrentLocation, lStart, lEnd;
     LocationListener mLocationListeners = new LocationListener((LocationManager.GPS_PROVIDER));
     static double distance = 0;
-    double speed, oldspeed = 0.00;
+    double speed;
     private FirebaseAuth auth;
     public final Handler handler = new Handler();
     Runnable r;
-    private String email, fullname, platenumber, violationid;
-    private int rd;
+    private String email, fullname, platenumber, violationid, speedzone = "On Start Location";
+    private int rd, counter = 0;
     private Random random = new Random();
     public static String oras, newspeed, newdistance, newaverage;
     public static String stringaverage = "0.000";
-    Double lat1, lat2, lng1, lng2;
+    Double lat1, lat2 = 7.056965597229231, lng1, lng2 = 125.59375216449648;
     FirebaseDatabase fd, fd1, fd2, fd3, fd4, fd5;
     DatabaseReference dr, dr1, dr2, dr3, dr4, dr5;
-    private long sTime, min;
+    private long min;
     public static final String ACTION_START_FOREGROUND_SERVICE = "ACTION_START_FOREGROUND_SERVICE";
     public static final String ACTION_STOP_FOREGROUND_SERVICE = "ACTION_STOP_FOREGROUND_SERVICE";
     public List<LatLng> stou = new ArrayList<>();
@@ -140,10 +140,6 @@ public class Services extends Service {
                         mLocationManager.requestLocationUpdates(
                                 LocationManager.GPS_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
                                 mLocationListeners);
-                        loc1 = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                        Log.e(TAG, "onGetLastKnownLocation: " + "Latitude: "+loc1.getLatitude()+"Latitude: "+loc1.getLongitude());
-                        lat2 = loc1.getLatitude();
-                        lng2 = loc1.getLongitude();
                     } catch (java.lang.SecurityException ex) {
                         Log.i(TAG, "Failed to request Location Update, ignore", ex);
                     } catch (IllegalArgumentException ex) {
@@ -1714,8 +1710,10 @@ public class Services extends Service {
 
     public void compare(){
 
-        MediaPlayer mp;
+        MediaPlayer mp, mp1, mp2;
         mp = MediaPlayer.create(this, R.raw.siren);
+        mp1 = MediaPlayer.create(this, R.raw.beep);
+        mp2 = MediaPlayer.create(this, R.raw.alarm);
         LatLng point = (new LatLng(lat1, lng1));
         String l = lat1.toString();
         String lg = lng1.toString();
@@ -2129,10 +2127,56 @@ public class Services extends Service {
 
             else if(PolyUtil.isLocationOnEdge(point, testlocation, true, 25)){
 
-                if(speed >= 30.00){
+                try{
 
-                    mp.start();
-                    setViolation("Testing Zone", l, lg, "30");
+                    if(!speedzone.equals("Test Location")){
+                        speedzone = "Test Location";
+                        if(!mp1.isPlaying()){
+                            mp1.start();
+                        }
+                        Toast.makeText(getApplicationContext(), "You are now in Test Location, Speed Limit is at 30 kp/h.", Toast.LENGTH_LONG).show();
+                        if((speed > 0.004) && (speed < 0.009)){
+                            if(!mp2.isPlaying()) {
+                                mp2.start();
+                            }
+                            Toast.makeText(getApplicationContext(), "You are approaching the speed limit. Reduce speed now.", Toast.LENGTH_SHORT).show();
+                        }
+                        else if(speed >= 0.01){
+                            if(!mp.isPlaying()) {
+                                mp.start();
+                            }
+                            if(counter == 5){
+                                setViolation("Testing Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                            Log.i(TAG, "Current Counter Value: " + counter);
+                        }
+                    }
+                    else{
+
+                        if((speed > 0.004) && (speed < 0.009)){
+                            if(!mp2.isPlaying()) {
+                                mp2.start();
+                            }
+                            Toast.makeText(getApplicationContext(), "You are approaching the speed limit. Reduce speed now.", Toast.LENGTH_SHORT).show();
+                        }
+                        else if(speed >= 0.01){
+                            if(!mp.isPlaying()) {
+                                mp.start();
+                            }
+                            if(counter == 5){
+                                setViolation("Testing Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                            Log.i(TAG, "Current Counter Value: " + counter);
+                        }
+                    }
+                }
+                catch(Exception e){
+
+                    Log.i(TAG, "(Services) On compare TestLocation Zone, Error: " + e);
                 }
             }
         }
@@ -2206,7 +2250,7 @@ public class Services extends Service {
     private void setViolation(String zone, String lt, String lg, String violation){
 
         try{
-
+            genRandom();
             System.out.println("On setting of Violation: "+zone);
             fd3 = FirebaseDatabase.getInstance();
             dr3 = fd3.getReference();
@@ -2308,7 +2352,6 @@ public class Services extends Service {
                     try{
 
                         rd = toIntExact(a);
-                        genRandom();
                     }
                     catch(Exception e){
 
@@ -2472,7 +2515,7 @@ public class Services extends Service {
             double a = Math.sin(dlat/2) * Math.sin(dlat/2) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.sin(dlng/2) * Math.sin(dlng/2);
             double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
             double distance = 6371 * c * 1000;
-            if(distance > 0.001){
+            if(distance > 10){
 
                 dr5.child("Users").child(parts[0]).child("Remarks").setValue("Vehicle is running.");
                 lat2 = lat1;
@@ -2495,7 +2538,7 @@ public class Services extends Service {
 
         int notificationId = 1;
         String channelId = "channel-01";
-        String channelName = "Channel Name";
+        String channelName = "Notif1";
         int importance = NotificationManager.IMPORTANCE_LOW;
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
