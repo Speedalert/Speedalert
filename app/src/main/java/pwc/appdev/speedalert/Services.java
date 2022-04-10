@@ -2490,235 +2490,1171 @@ public class Services extends Service {
 
             else if(PolyUtil.isLocationOnPath(point, rizal, true, 15)){
 
-                if(speed > 30.00){
+                try{
 
-                    mp.start();
-                    setViolation("Rizal St. Zone", l, lg, "30");
+                    if(!speedzone.equals("Rizal St. Zone")){
+                        speedzone = "Rizal St. Zone";
+                        if(!mp1.isPlaying()){mp1.start();}
+                        sendBroadcast("You are now in Rizal St. Zone, Speed Limit is at 30 kp/h.");
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Rizal St. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                    else{
+
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Rizal St. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                }
+                catch(Exception e){
+
+                    Log.i(TAG, "(Services) On compare Rizal St. Zone, Error: " + e);
                 }
             }
 
             else if(PolyUtil.isLocationOnPath(point, bonifacio, true, 15)){
 
-                if(speed > 30.00){
+                try{
 
-                    mp.start();
-                    setViolation("Bonifacio St. Zone", l, lg, "30");
+                    if(!speedzone.equals("Bonifacio St. Zone")){
+                        speedzone = "Bonifacio St. Zone";
+                        if(!mp1.isPlaying()){mp1.start();}
+                        sendBroadcast("You are now in Bonifacio St. Zone, Speed Limit is at 30 kp/h.");
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Bonifacio St. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                    else{
+
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Bonifacio St. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                }
+                catch(Exception e){
+
+                    Log.i(TAG, "(Services) On compare Bonifacio St. Zone, Error: " + e);
                 }
             }
 
             else if(PolyUtil.isLocationOnPath(point, jpalmagil, true, 15)){
 
-                if(speed > 30.00){
+                try{
 
-                    mp.start();
-                    setViolation("J. Palma Gil St. Zone", l, lg, "30");
+                    if(!speedzone.equals("J. Palma Gil St. Zone")){
+                        speedzone = "J. Palma Gil St. Zone";
+                        if(!mp1.isPlaying()){mp1.start();}
+                        sendBroadcast("You are now in J. Palma Gil St. Zone, Speed Limit is at 30 kp/h.");
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("J. Palma Gil St. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                    else{
+
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("J. Palma Gil St. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                }
+                catch(Exception e){
+
+                    Log.i(TAG, "(Services) On compare J. Palma Gil St. Zone, Error: " + e);
                 }
             }
 
             else if(PolyUtil.isLocationOnPath(point, apichon, true, 15)){
 
-                if(speed > 30.00){
+                try{
 
-                    mp.start();
-                    setViolation("A. Pichon/Magallanes St. Zone", l, lg, "30");
+                    if(!speedzone.equals("A. Pichon/Magallanes St. Zone")){
+                        speedzone = "A. Pichon/Magallanes St. Zone";
+                        if(!mp1.isPlaying()){mp1.start();}
+                        sendBroadcast("You are now in A. Pichon/Magallanes St. Zone, Speed Limit is at 30 kp/h.");
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("A. Pichon/Magallanes St. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                    else{
+
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("A. Pichon/Magallanes St. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                }
+                catch(Exception e){
+
+                    Log.i(TAG, "(Services) On compare A. Pichon/Magallanes St. Zone, Error: " + e);
                 }
             }
 
             else if(PolyUtil.isLocationOnPath(point, bacacacir, true, 15)){
 
-                if(speed > 30.00){
+                try{
 
-                    mp.start();
-                    setViolation("C.P Garcia Highway - Bacaca to Circumferential Road Zone", l, lg, "30");
+                    if(!speedzone.equals("C.P Garcia Highway - Bacaca to Circumferential Road Zone")){
+                        speedzone = "C.P Garcia Highway - Bacaca to Circumferential Road Zone";
+                        if(!mp1.isPlaying()){mp1.start();}
+                        sendBroadcast("You are now in C.P Garcia Highway - Bacaca to Circumferential Road Zone, Speed Limit is at 30 kp/h.");
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("C.P Garcia Highway - Bacaca to Circumferential Road Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                    else{
+
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("C.P Garcia Highway - Bacaca to Circumferential Road Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                }
+                catch(Exception e){
+
+                    Log.i(TAG, "(Services) On compare C.P Garcia Highway - Bacaca to Circumferential Road Zone, Error: " + e);
                 }
             }
 
             else if(PolyUtil.isLocationOnPath(point, ejtor, true, 15)){
 
-                if(speed > 30.00){
+                try{
 
-                    mp.start();
-                    setViolation("Emilio Jacinto Ext. to cor. Quirino Ave. Zone", l, lg, "30");
+                    if(!speedzone.equals("Emilio Jacinto Ext. to cor. Quirino Ave. Zone")){
+                        speedzone = "Emilio Jacinto Ext. to cor. Quirino Ave. Zone";
+                        if(!mp1.isPlaying()){mp1.start();}
+                        sendBroadcast("You are now in Emilio Jacinto Ext. to cor. Quirino Ave. Zone, Speed Limit is at 30 kp/h.");
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Emilio Jacinto Ext. to cor. Quirino Ave. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                    else{
+
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Emilio Jacinto Ext. to cor. Quirino Ave. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                }
+                catch(Exception e){
+
+                    Log.i(TAG, "(Services) On compare Emilio Jacinto Ext. to cor. Quirino Ave. Zone, Error: " + e);
                 }
             }
 
             else if(PolyUtil.isLocationOnPath(point, mabini, true, 15)){
 
-                if(speed > 30.00){
+                try{
 
-                    mp.start();
-                    setViolation("Mabini St. Zone", l, lg, "30");
+                    if(!speedzone.equals("Mabini St. Zone")){
+                        speedzone = "Mabini St. Zone";
+                        if(!mp1.isPlaying()){mp1.start();}
+                        sendBroadcast("You are now in Mabini St. Zone, Speed Limit is at 30 kp/h.");
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Mabini St. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                    else{
+
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Mabini St. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                }
+                catch(Exception e){
+
+                    Log.i(TAG, "(Services) On compare Mabini St. Zone, Error: " + e);
                 }
             }
 
             else if(PolyUtil.isLocationOnPath(point, tionko, true, 15)){
 
-                if(speed > 30.00){
+                try{
 
-                    mp.start();
-                    setViolation("Tionko Ave. Zone", l, lg, "30");
+                    if(!speedzone.equals("Tionko Ave. Zone")){
+                        speedzone = "Tionko Ave. Zone";
+                        if(!mp1.isPlaying()){mp1.start();}
+                        sendBroadcast("You are now in Tionko Ave. Zone, Speed Limit is at 30 kp/h.");
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Tionko Ave. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                    else{
+
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Tionko Ave. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                }
+                catch(Exception e){
+
+                    Log.i(TAG, "(Services) On compare Tionko Ave. Zone, Error: " + e);
                 }
             }
 
             else if(PolyUtil.isLocationOnPath(point, roxas, true, 15)){
 
-                if(speed > 30.00){
+                try{
 
-                    mp.start();
-                    setViolation("Roxas Ave. Zone", l, lg, "30");
+                    if(!speedzone.equals("Roxas Ave. Zone")){
+                        speedzone = "Roxas Ave. Zone";
+                        if(!mp1.isPlaying()){mp1.start();}
+                        sendBroadcast("You are now in Roxas Ave. Zone, Speed Limit is at 30 kp/h.");
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Roxas Ave. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                    else{
+
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Roxas Ave. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                }
+                catch(Exception e){
+
+                    Log.i(TAG, "(Services) On compare Roxas Ave. Zone, Error: " + e);
                 }
             }
 
             else if(PolyUtil.isLocationOnPath(point, claveria, true, 15)){
 
-                if(speed > 30.00){
+                try{
 
-                    mp.start();
-                    setViolation("Claveria St. Zone", l, lg, "30");
+                    if(!speedzone.equals("Claveria St. Zone")){
+                        speedzone = "Claveria St. Zone";
+                        if(!mp1.isPlaying()){mp1.start();}
+                        sendBroadcast("You are now in Claveria St. Zone, Speed Limit is at 30 kp/h.");
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Claveria St. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                    else{
+
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Claveria St. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                }
+                catch(Exception e){
+
+                    Log.i(TAG, "(Services) On compare Claveria St. Zone, Error: " + e);
                 }
             }
 
             else if(PolyUtil.isLocationOnPath(point, cbtocsp, true, 15)){
 
-                if(speed > 30.00){
+                try{
 
-                    mp.start();
-                    setViolation("Ponciano / C. Bangoy St. to Cor. San Pedro St. Zone", l, lg, "30");
+                    if(!speedzone.equals("Ponciano / C. Bangoy St. to Cor. San Pedro St. Zone")){
+                        speedzone = "Ponciano / C. Bangoy St. to Cor. San Pedro St. Zone";
+                        if(!mp1.isPlaying()){mp1.start();}
+                        sendBroadcast("You are now in Ponciano / C. Bangoy St. to Cor. San Pedro St. Zone, Speed Limit is at 30 kp/h.");
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Ponciano / C. Bangoy St. to Cor. San Pedro St. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                    else{
+
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Ponciano / C. Bangoy St. to Cor. San Pedro St. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                }
+                catch(Exception e){
+
+                    Log.i(TAG, "(Services) On compare Ponciano / C. Bangoy St. to Cor. San Pedro St. Zone, Error: " + e);
                 }
             }
 
             else if(PolyUtil.isLocationOnPath(point, cbangoy, true, 15)){
 
-                if(speed > 30.00){
+                try{
 
-                    mp.start();
-                    setViolation("C. Bangoy St. Zone", l, lg, "30");
+                    if(!speedzone.equals("C. Bangoy St. Zone")){
+                        speedzone = "C. Bangoy St. Zone";
+                        if(!mp1.isPlaying()){mp1.start();}
+                        sendBroadcast("You are now in C. Bangoy St. Zone, Speed Limit is at 30 kp/h.");
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("C. Bangoy St. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                    else{
+
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("C. Bangoy St. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                }
+                catch(Exception e){
+
+                    Log.i(TAG, "(Services) On compare C. Bangoy St. Zone, Error: " + e);
                 }
             }
 
             else if(PolyUtil.isLocationOnPath(point, bmtoo, true, 20)){
 
-                if(speed > 30.00){
+                try{
 
-                    mp.start();
-                    setViolation("Buhangin Milan to J.P. Laurel Overpass Zone", l, lg, "30");
+                    if(!speedzone.equals("Buhangin Milan to J.P Laurel Overpass Zone")){
+                        speedzone = "Buhangin Milan to J.P Laurel Overpass Zone";
+                        if(!mp1.isPlaying()){mp1.start();}
+                        sendBroadcast("You are now in Buhangin Milan to J.P Laurel Overpass Zone, Speed Limit is at 30 kp/h.");
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Buhangin Milan to J.P Laurel Overpass Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                    else{
+
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Buhangin Milan to J.P Laurel Overpass Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                }
+                catch(Exception e){
+
+                    Log.i(TAG, "(Services) On compare Buhangin Milan to J.P Laurel Overpass Zone, Error: " + e);
                 }
             }
 
             else if(PolyUtil.isLocationOnPath(point, jpltoa, true, 20)){
 
-                if(speed > 30.00){
+                try{
 
-                    mp.start();
-                    setViolation("J.P. Laurel Overpass to Acacia Zone", l, lg, "30");
+                    if(!speedzone.equals("J.P. Laurel Overpass to Acacia Zone")){
+                        speedzone = "J.P. Laurel Overpass to Acacia Zone";
+                        if(!mp1.isPlaying()){mp1.start();}
+                        sendBroadcast("You are now in J.P. Laurel Overpass to Acacia Zone, Speed Limit is at 30 kp/h.");
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("J.P. Laurel Overpass to Acacia Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                    else{
+
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("J.P. Laurel Overpass to Acacia Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                }
+                catch(Exception e){
+
+                    Log.i(TAG, "(Services) On compare J.P. Laurel Overpass to Acacia Zone, Error: " + e);
                 }
             }
 
             else if(PolyUtil.isLocationOnPath(point, qtogb, true, 20)){
 
-                if(speed > 30.00){
+                try{
 
-                    mp.start();
-                    setViolation("Quirino Ave. to Generoso Bridge Zone", l, lg, "30");
+                    if(!speedzone.equals("Quirino Ave. to Generoso Bridge Zone")){
+                        speedzone = "Quirino Ave. to Generoso Bridge Zone";
+                        if(!mp1.isPlaying()){mp1.start();}
+                        sendBroadcast("You are now in Quirino Ave. to Generoso Bridge Zone, Speed Limit is at 30 kp/h.");
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Quirino Ave. to Generoso Bridge Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                    else{
+
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Quirino Ave. to Generoso Bridge Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                }
+                catch(Exception e){
+
+                    Log.i(TAG, "(Services) On compare Quirino Ave. to Generoso Bridge Zone, Error: " + e);
                 }
             }
 
             else if(PolyUtil.isLocationOnPath(point, tulip, true, 15)){
 
-                if(speed > 30.00){
+                try{
 
-                    mp.start();
-                    setViolation("Tulip Drive Zone", l, lg, "30");
+                    if(!speedzone.equals("Tulip Drive Zone")){
+                        speedzone = "Tulip Drive Zone";
+                        if(!mp1.isPlaying()){mp1.start();}
+                        sendBroadcast("You are now in Tulip Drive Zone, Speed Limit is at 30 kp/h.");
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Tulip Drive Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                    else{
+
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Tulip Drive Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                }
+                catch(Exception e){
+
+                    Log.i(TAG, "(Services) On compare Tulip Drive Zone, Error: " + e);
                 }
             }
 
             else if(PolyUtil.isLocationOnPath(point, sandawa, true, 15)){
 
-                if(speed > 30.00){
+                try{
 
-                    mp.start();
-                    setViolation("Guillermo E. Torres (Sandawa) Zone", l, lg, "30");
+                    if(!speedzone.equals("Guillermo E. Torres (Sandawa) Zone")){
+                        speedzone = "Guillermo E. Torres (Sandawa) Zone";
+                        if(!mp1.isPlaying()){mp1.start();}
+                        sendBroadcast("You are now in Guillermo E. Torres (Sandawa) Zone, Speed Limit is at 30 kp/h.");
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Guillermo E. Torres (Sandawa) Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                    else{
+
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Guillermo E. Torres (Sandawa) Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                }
+                catch(Exception e){
+
+                    Log.i(TAG, "(Services) On compare Guillermo E. Torres (Sandawa) Zone, Error: " + e);
                 }
             }
 
             else if(PolyUtil.isLocationOnPath(point, ftorres, true, 15)){
 
-                if(speed > 30.00){
+                try{
 
-                    mp.start();
-                    setViolation("F. Torres St. Zone", l, lg, "30");
+                    if(!speedzone.equals("F. Torres St. Zone")){
+                        speedzone = "F. Torres St. Zone";
+                        if(!mp1.isPlaying()){mp1.start();}
+                        sendBroadcast("You are now in F. Torres St. Zone, Speed Limit is at 30 kp/h.");
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("F. Torres St. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                    else{
+
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("F. Torres St. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                }
+                catch(Exception e){
+
+                    Log.i(TAG, "(Services) On compare F. Torres St. Zone, Error: " + e);
                 }
             }
 
             else if(PolyUtil.isLocationOnPath(point, bacaca, true, 15)){
 
-                if(speed > 30.00){
+                try{
 
-                    mp.start();
-                    setViolation("Bacaca Road Zone", l, lg, "30");
+                    if(!speedzone.equals("Bacaca Road Zone")){
+                        speedzone = "Bacaca Road Zone";
+                        if(!mp1.isPlaying()){mp1.start();}
+                        sendBroadcast("You are now in Bacaca Road Zone, Speed Limit is at 30 kp/h.");
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Bacaca Road Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                    else{
+
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Bacaca Road Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                }
+                catch(Exception e){
+
+                    Log.i(TAG, "(Services) On compare Bacaca Road Zone, Error: " + e);
                 }
             }
 
             else if(PolyUtil.isLocationOnPath(point, medical, true, 15)){
 
-                if(speed > 30.00){
+                try{
 
-                    mp.start();
-                    setViolation("Medical School Drive Zone", l, lg, "30");
+                    if(!speedzone.equals("Medical School Drive Zone")){
+                        speedzone = "Medical School Drive Zone";
+                        if(!mp1.isPlaying()){mp1.start();}
+                        sendBroadcast("You are now in Medical School Drive Zone, Speed Limit is at 30 kp/h.");
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Medical School Drive Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                    else{
+
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Medical School Drive Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                }
+                catch(Exception e){
+
+                    Log.i(TAG, "(Services) On compare Medical School Drive Zone, Error: " + e);
                 }
             }
 
             else if(PolyUtil.isLocationOnPath(point, selga, true, 15)){
 
-                if(speed > 30.00){
+                try{
 
-                    mp.start();
-                    setViolation("Fr. Selga St. Zone", l, lg, "30");
+                    if(!speedzone.equals("Fr. Selga St. Zone")){
+                        speedzone = "Fr. Selga St. Zone";
+                        if(!mp1.isPlaying()){mp1.start();}
+                        sendBroadcast("You are now in Fr. Selga St. Zone, Speed Limit is at 30 kp/h.");
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Fr. Selga St. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                    else{
+
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Fr. Selga St. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                }
+                catch(Exception e){
+
+                    Log.i(TAG, "(Services) On compare Fr. Selga St. Zone, Error: " + e);
                 }
             }
 
             else if(PolyUtil.isLocationOnPath(point, ljtoapo, true, 15)){
 
-                if(speed > 30.00){
+                try{
 
-                    mp.start();
-                    setViolation("Lopez Jaena St to Mt. Apo St. Zone", l, lg, "30");
+                    if(!speedzone.equals("Lopez Jaena St to Mt. Apo St. Zone")){
+                        speedzone = "Lopez Jaena St to Mt. Apo St. Zone";
+                        if(!mp1.isPlaying()){mp1.start();}
+                        sendBroadcast("You are now in Lopez Jaena St to Mt. Apo St. Zone, Speed Limit is at 30 kp/h.");
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Lopez Jaena St to Mt. Apo St. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                    else{
+
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Lopez Jaena St to Mt. Apo St. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                }
+                catch(Exception e){
+
+                    Log.i(TAG, "(Services) On compare Lopez Jaena St to Mt. Apo St. Zone, Error: " + e);
                 }
             }
 
             else if(PolyUtil.isLocationOnPath(point, generalmalvar, true, 15)){
 
-                if(speed > 30.00){
+                try{
 
-                    mp.start();
-                    setViolation("General Malvar St.  Zone", l, lg, "30");
+                    if(!speedzone.equals("General Malvar St. Zone")){
+                        speedzone = "General Malvar St. Zone";
+                        if(!mp1.isPlaying()){mp1.start();}
+                        sendBroadcast("You are now in General Malvar St. Zone, Speed Limit is at 30 kp/h.");
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("General Malvar St. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                    else{
+
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("General Malvar St. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                }
+                catch(Exception e){
+
+                    Log.i(TAG, "(Services) On compare General Malvar St. Zone, Error: " + e);
                 }
             }
 
             else if(PolyUtil.isLocationOnPath(point, sanpedroext, true, 15)){
 
-                if(speed > 30.00){
+                try{
 
-                    mp.start();
-                    setViolation("San Pedro Extension Zone", l, lg, "30");
+                    if(!speedzone.equals("San Pedro Extension Zone")){
+                        speedzone = "San Pedro Extension Zone";
+                        if(!mp1.isPlaying()){mp1.start();}
+                        sendBroadcast("You are now in San Pedro Extension Zone, Speed Limit is at 30 kp/h.");
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("San Pedro Extension Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                    else{
+
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("San Pedro Extension Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                }
+                catch(Exception e){
+
+                    Log.i(TAG, "(Services) On compare San Pedro Extension Zone, Error: " + e);
                 }
             }
 
             else if(PolyUtil.isLocationOnPath(point, camusext, true, 15)){
 
-                if(speed > 30.00){
+                try{
 
-                    mp.start();
-                    setViolation("J. Camus Extension Zone", l, lg, "30");
+                    if(!speedzone.equals("J. Camus Extension Zone")){
+                        speedzone = "J. Camus Extension Zone";
+                        if(!mp1.isPlaying()){mp1.start();}
+                        sendBroadcast("You are now in J. Camus Extension Zone, Speed Limit is at 30 kp/h.");
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("J. Camus Extension Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                    else{
+
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("J. Camus Extension Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                }
+                catch(Exception e){
+
+                    Log.i(TAG, "(Services) On compare J. Camus Extension Zone, Error: " + e);
                 }
             }
 
             else if(PolyUtil.isLocationOnPath(point, loyola, true, 15)){
 
-                if(speed > 30.00){
+                try{
 
-                    mp.start();
-                    setViolation("Loyola St. Zone", l, lg, "30");
+                    if(!speedzone.equals("Loyola St. Zone")){
+                        speedzone = "Loyola St. Zone";
+                        if(!mp1.isPlaying()){mp1.start();}
+                        sendBroadcast("You are now in Loyola St. Zone, Speed Limit is at 30 kp/h.");
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Loyola St. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                    else{
+
+                        if(speed > 24 && speed <= 30){
+                            if(!mp2.isPlaying()){mp2.start();}
+                            sendBroadcast("You are approaching the speed limit. Reduce speed now.");
+                        }
+                        else if(speed > 30){
+                            sendBroadcast("You are beyond the specified speed limit. Reduce speed now.");
+                            if(!mp.isPlaying()){mp.start();}
+                            if(counter == 5){
+                                setViolation("Loyola St. Zone", l, lg, "30");
+                                counter = 0;
+                            }
+                            counter++;
+                        }
+                    }
+                }
+                catch(Exception e){
+
+                    Log.i(TAG, "(Services) On compare Loyola St. Zone, Error: " + e);
                 }
             }
 
