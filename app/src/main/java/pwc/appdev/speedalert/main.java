@@ -8,10 +8,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import android.app.ActivityManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -54,6 +58,7 @@ public class main extends AppCompatActivity
     private TextView fname,femail;
     private DrawerLayout drawer, mRoot;
     private String[] parts = new String[2];
+    private BroadcastReceiver mReceiver = null;
     FirebaseDatabase fd, fd1, fd2, fd3, fd4;
     DatabaseReference dr, dr1, dr2, dr3, dr4;
 
@@ -75,7 +80,14 @@ public class main extends AppCompatActivity
         if(getSupportActionBar()!= null){
             getSupportActionBar().hide();
         }
-
+        mReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String message = intent.getStringExtra("MESSAGE");
+                Snackbar msg = Snackbar.make(mRoot, message, Snackbar.LENGTH_LONG);
+                msg.show();
+            }
+        };
         auth = FirebaseAuth.getInstance();
         FirebaseUser users = auth.getCurrentUser();
         if (users != null) {
@@ -288,6 +300,7 @@ public class main extends AppCompatActivity
 
         setStatusActive();
         checkConnectivity();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter("EVENT_SNACKBAR"));
         getName();
         super.onResume();
 
