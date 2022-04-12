@@ -61,14 +61,14 @@ public class Services extends Service {
     private FirebaseAuth auth;
     public final Handler handler = new Handler();
     Runnable r;
-    private String email, fullname, platenumber, violationid, speedzone = "On Start Location";
+    private String UID, email, fullname, platenumber, violationid, speedzone = "On Start Location";
     private int rd, counter = 0;
     private Random random = new Random();
     public static String oras, newspeed, newdistance, newaverage;
     public static String stringaverage = "0.000";
     Double lat1, lat2 = 7.056965597229231, lng1, lng2 = 125.59375216449648;
-    FirebaseDatabase fd, fd1, fd2, fd3, fd4, fd5;
-    DatabaseReference dr, dr1, dr2, dr3, dr4, dr5;
+    FirebaseDatabase fd, fd1, fd2, fd3, fd4, fd5, fd6;
+    DatabaseReference dr, dr1, dr2, dr3, dr4, dr5, dr6;
     private long min;
     public static final String ACTION_START_FOREGROUND_SERVICE = "ACTION_START_FOREGROUND_SERVICE";
     public static final String ACTION_STOP_FOREGROUND_SERVICE = "ACTION_STOP_FOREGROUND_SERVICE";
@@ -1686,6 +1686,7 @@ public class Services extends Service {
                     if (users != null) {
 
                         email = users.getEmail();
+                        UID = users.getUid();
                         getName();
                         getViolationID();
                         handler.postDelayed(r = () -> {
@@ -3786,9 +3787,10 @@ public class Services extends Service {
 
         try{
             genRandom();
-            System.out.println("On setting of Violation: "+zone);
             fd3 = FirebaseDatabase.getInstance();
             dr3 = fd3.getReference();
+            fd6 = FirebaseDatabase.getInstance();
+            dr6 = fd6.getReference();
             SimpleDateFormat simpleTimeStampFormat;
             simpleTimeStampFormat = new SimpleDateFormat(getString(R.string.timestamp), Locale.US);
             String timestamp = simpleTimeStampFormat.format(new Date());
@@ -3809,6 +3811,7 @@ public class Services extends Service {
             vu.setViolation("The speed recorded exceeded the maximum speed limit of "+violation+" kp/h.");
 
             dr3.child("Violations").child(""+violationid+"").setValue(vu);
+            dr6.child("Violation").child(UID).child(""+violationid+"").setValue(vu);
         }
 
         catch(Exception e){

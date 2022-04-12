@@ -245,6 +245,14 @@ public class main extends AppCompatActivity
 
         }
 
+        else if (id == R.id.violations){
+
+            ViolationFragment p = new ViolationFragment();
+            FragmentManager f = getSupportFragmentManager();
+            f.beginTransaction().replace(R.id.mainLayout, p).addToBackStack(null).commit();
+
+        }
+
         else if (id == R.id.logout){
 
             AlertDialog.Builder builder = new AlertDialog.Builder(main.this);

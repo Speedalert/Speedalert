@@ -39,5 +39,6 @@
     <string name="datepattern">MM/dd/yyyy</string>
     <string name="timepattern">HH:mm</string>
     <string name="timestamp">MM/dd/yyyy hh:mm a</string>
+    <string name="violations">My Violations</string>
 
 </resources>
