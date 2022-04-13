@@ -57,11 +57,13 @@ public class ViolationFragment extends Fragment {
 
             FirebaseRecyclerOptions<RetrieveViolations> options =
                     new FirebaseRecyclerOptions.Builder<RetrieveViolations>()
-                            .setQuery(viol, snapshot -> new RetrieveViolations(
-                                    snapshot.child("id").getValue().toString(),
-                                    snapshot.child("address").getValue().toString(),
-                                    snapshot.child("datetime").getValue().toString(),
-                                    snapshot.child("violation").getValue().toString()))
+                            .setQuery(viol, snapshot -> {
+                                return new RetrieveViolations(
+                                        snapshot.child("violationID").getValue().toString(),
+                                        snapshot.child("address").getValue().toString(),
+                                        snapshot.child("dateTime").getValue().toString(),
+                                        snapshot.child("violation").getValue().toString());
+                            })
                             .build();
 
             FirebaseRecyclerAdapter<RetrieveViolations, RequestsViewHolder> adapter = new FirebaseRecyclerAdapter<RetrieveViolations, RequestsViewHolder>(options) {
